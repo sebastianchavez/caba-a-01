@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servicios · Cabañas del Bosque</title>
+  <meta name="description" content="Servicios premium para tu estadía: cenas románticas, spa, tours guiados y experiencias únicas en el bosque." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34', 'primary-light': '#c08552', 'primary-dark': '#6b4423',
+            secondary: '#3d5f3d', 'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1', 'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce', 'background-dark': '#2c1f15', 'background-card': '#ffffff',
+            muted: '#6b5d4f', border: '#e0d2bd'
+          },
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="servicios" class="bg-background-light text-gray-800 font-sans">
+
+  <div id="appHeader"></div>
+
+  <main>
+    <!-- HERO -->
+    <section class="relative h-[55vh] flex items-center gradient-overlay hero-fallback" style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=85&auto=format&fit=crop'); background-size: cover; background-position: center; background-color: #2c1f15;">
+      <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl">
+          <p class="text-accent uppercase tracking-[0.3em] text-sm mb-4 font-bold">Servicios</p>
+          <h1 class="text-5xl md:text-7xl font-black text-white leading-[1.05] mb-6 font-display">
+            Experiencias <span class="italic text-accent">únicas</span>
+          </h1>
+          <p class="text-lg md:text-xl text-gray-100 max-w-2xl leading-relaxed">
+            Más allá del alojamiento, te ofrecemos servicios diseñados para hacer de tu estadía algo verdaderamente memorable.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="py-16 lg:py-20 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 font-display">Nuestros servicios</h2>
+        <p class="text-gray-600">Contrata cualquier servicio al momento de reservar o durante tu estadía.</p>
+      </div>
+
+      <div id="serviciosGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Inyectado por JS -->
+      </div>
+    </section>
+
+    <!-- PAQUETES -->
+    <section class="py-16 lg:py-20 bg-background-cream">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-bold">Ahorra más</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 font-display">Paquetes especiales</h2>
+          <p class="text-gray-600">Combina cabaña + servicios y obtén descuentos exclusivos.</p>
+        </div>
+
+        <div id="paquetesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Inyectado por JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section class="py-16 lg:py-20 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 font-display">¿Cómo reservar servicios?</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto rounded-full bg-primary text-white text-2xl font-bold flex items-center justify-center mb-4 font-display">1</div>
+          <h3 class="font-bold text-lg mb-2">Reserva tu cabaña</h3>
+          <p class="text-sm text-muted">Selecciona fechas y cabaña en nuestro sistema.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto rounded-full bg-primary text-white text-2xl font-bold flex items-center justify-center mb-4 font-display">2</div>
+          <h3 class="font-bold text-lg mb-2">Agrega servicios</h3>
+          <p class="text-sm text-muted">Selecciona los servicios extras que desees.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto rounded-full bg-primary text-white text-2xl font-bold flex items-center justify-center mb-4 font-display">3</div>
+          <h3 class="font-bold text-lg mb-2">Disfruta</h3>
+          <p class="text-sm text-muted">Nosotros nos encargamos de todo lo demás.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-secondary text-white text-center">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold font-display mb-4">¿Listo para tu escapada perfecta?</h2>
+        <p class="text-white/70 max-w-2xl mx-auto mb-8">Reserva ahora y personaliza tu estadía con servicios premium.</p>
+        <a href="reserva.html" class="btn-primary bg-accent text-background-dark hover:bg-white text-base px-8 py-3.5">Reservar ahora</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const sGrid = document.getElementById('serviciosGrid');
+      sGrid.innerHTML = SERVICIOS.map(s => `
+        <article class="bg-white rounded-2xl p-7 shadow-sm card-hover border border-border flex flex-col">
+          <div class="w-16 h-16 rounded-2xl bg-background-cream flex items-center justify-center mb-5 text-primary">
+            ${iconoServicio(s.icono)}
+          </div>
+          <div class="flex items-start justify-between mb-3 gap-3">
+            <h3 class="font-display text-xl font-bold text-gray-900">${s.nombre}</h3>
+            <span class="font-bold text-primary whitespace-nowrap">${UI.formatMoneda(s.precio)}</span>
+          </div>
+          <p class="text-sm text-muted leading-relaxed flex-1">${s.descripcion}</p>
+          <a href="reserva.html" class="btn-outline mt-5 text-sm">Agregar al reservar</a>
+        </article>
+      `).join('');
+
+      const pGrid = document.getElementById('paquetesGrid');
+      pGrid.innerHTML = PAQUETES.map(p => {
+        const cabana = Cabanas.getById(p.incluye[0]);
+        const serviciosIncluidos = p.incluye.slice(1).map(id => SERVICIOS.find(sv => sv.id === id)?.nombre).filter(Boolean);
+        return `
+        <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover flex flex-col">
+          <div class="bg-primary text-white p-6 text-center">
+            <div class="inline-block bg-accent text-background-dark text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">Ahorra ${p.descuento}%</div>
+            <h3 class="font-display text-2xl font-bold mb-2">${p.nombre}</h3>
+            <p class="text-white/80 text-sm">${p.descripcion}</p>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <div class="space-y-2 mb-5 text-sm">
+              <p class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>${cabana ? cabana.nombre : ''}</span></p>
+              ${serviciosIncluidos.map(n => `<p class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>${n}</span></p>`).join('')}
+            </div>
+            <div class="flex items-baseline gap-2 mb-5 mt-auto">
+              <span class="font-display text-3xl font-bold text-primary">${UI.formatMoneda(p.precioTotal)}</span>
+              <span class="text-muted line-through text-sm">${UI.formatMoneda(p.precioRegular)}</span>
+            </div>
+            <a href="reserva.html" class="btn-primary block text-center">Reservar paquete</a>
+          </div>
+        </div>
+        `;
+      }).join('');
+    }
+
+    function iconoServicio(tipo) {
+      const iconos = {
+        utensils: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2 0-3 1-3 3s1 3 3 3 3-1 3-3-1-3-3-3zM6 21h12M9 21v-4m6 4v-4M12 4v4"/></svg>',
+        wine: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21V9m0 0a4 4 0 100-8 4 4 0 000 8zm0 0v12m-4 0h8"/></svg>',
+        tree: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>',
+        spa: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>',
+        fire: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>',
+        mountain: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21l6-9 4 6 4-4 4 7H3z"/></svg>'
+      };
+      return iconos[tipo] || iconos.tree;
+    }
+  </script>
+</body>
+</html>

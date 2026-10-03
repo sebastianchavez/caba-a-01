@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear cuenta · Cabañas del Bosque</title>
+  <meta name="description" content="Crea tu cuenta en Cabañas del Bosque y empieza a planificar tu escapada." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34', 'primary-light': '#c08552', 'primary-dark': '#6b4423',
+            secondary: '#3d5f3d', 'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1', 'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce', 'background-dark': '#2c1f15', 'background-card': '#ffffff',
+            muted: '#6b5d4f', border: '#e0d2bd'
+          },
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="registro" class="bg-background-light text-gray-800 font-sans min-h-screen flex flex-col">
+
+  <div id="appHeader"></div>
+
+  <main class="flex-1 py-12 px-4">
+    <div class="w-full max-w-lg mx-auto">
+
+      <div class="text-center mb-8">
+        <div class="w-16 h-16 rounded-2xl gradient-wood flex items-center justify-center text-white mx-auto mb-4 shadow-lg">
+          <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+        </div>
+        <h1 class="font-display text-3xl font-bold mb-1">Crea tu cuenta</h1>
+        <p class="text-muted text-sm">Únete y descubre todas las ventajas</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-xl border border-border p-8">
+        <form id="registroForm" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold mb-1">Nombre completo *</label>
+              <input id="nombre" type="text" class="input-field" required placeholder="Juan Pérez" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold mb-1">DNI</label>
+              <input id="dni" type="text" class="input-field" maxlength="15" placeholder="12345678" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-1">Email *</label>
+            <input id="email" type="email" class="input-field" required placeholder="tu@email.com" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-1">Teléfono</label>
+            <input id="telefono" type="tel" class="input-field" placeholder="+51 999 999 999" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-1">Contraseña *</label>
+            <div class="relative">
+              <input id="password" type="password" class="input-field pr-12" required minlength="6" placeholder="Mínimo 6 caracteres"/>
+              <button type="button" id="togglePass" class="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-primary">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              </button>
+            </div>
+            <p class="text-xs text-muted mt-1">Mínimo 6 caracteres</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-1">Confirmar contraseña *</label>
+            <input id="password2" type="password" class="input-field" required placeholder="Repite tu contraseña" />
+          </div>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" id="terminos" required class="mt-1 w-4 h-4 accent-primary"/>
+            <span class="text-sm text-muted">Acepto los <a href="terminos.html" target="_blank" class="text-primary hover:underline">términos y condiciones</a> y la <a href="privacidad.html" target="_blank" class="text-primary hover:underline">política de privacidad</a>.</span>
+          </label>
+
+          <button type="submit" class="btn-primary w-full py-3">
+            Crear mi cuenta
+          </button>
+        </form>
+
+        <p class="text-center text-sm text-muted mt-6">
+          ¿Ya tienes cuenta?
+          <a href="inicio-sesion.html" class="text-primary font-bold hover:underline">Iniciar sesión</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      document.getElementById('togglePass').addEventListener('click', () => {
+        const p1 = document.getElementById('password');
+        const p2 = document.getElementById('password2');
+        const t = p1.type === 'password' ? 'text' : 'password';
+        p1.type = t;
+        p2.type = t;
+      });
+
+      document.getElementById('registroForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const nombre = document.getElementById('nombre').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const telefono = document.getElementById('telefono').value.trim();
+        const dni = document.getElementById('dni').value.trim();
+        const password = document.getElementById('password').value;
+        const password2 = document.getElementById('password2').value;
+        const terminos = document.getElementById('terminos').checked;
+
+        if (!nombre || !email) {
+          UI.toast('Completa los campos obligatorios', 'error'); return;
+        }
+        if (password.length < 6) {
+          UI.toast('La contraseña debe tener mínimo 6 caracteres', 'error'); return;
+        }
+        if (password !== password2) {
+          UI.toast('Las contraseñas no coinciden', 'error'); return;
+        }
+        if (!terminos) {
+          UI.toast('Debes aceptar los términos y condiciones', 'error'); return;
+        }
+
+        const r = Auth.register({ nombre, email, telefono, dni, password });
+        if (r.ok) {
+          UI.toast('¡Cuenta creada con éxito! Bienvenido ' + r.user.nombre.split(' ')[0], 'success');
+          const ret = new URLSearchParams(location.search).get('return');
+          setTimeout(() => window.location.href = ret === 'reserva' ? 'reserva.html' : 'perfil.html', 1000);
+        } else {
+          UI.toast(r.error, 'error');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

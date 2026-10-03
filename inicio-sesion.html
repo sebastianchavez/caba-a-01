@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar sesión · Cabañas del Bosque</title>
+  <meta name="description" content="Inicia sesión en tu cuenta de Cabañas del Bosque." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34', 'primary-light': '#c08552', 'primary-dark': '#6b4423',
+            secondary: '#3d5f3d', 'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1', 'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce', 'background-dark': '#2c1f15', 'background-card': '#ffffff',
+            muted: '#6b5d4f', border: '#e0d2bd'
+          },
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="inicio-sesion" class="bg-background-light text-gray-800 font-sans min-h-screen flex flex-col">
+
+  <div id="appHeader"></div>
+
+  <main class="flex-1 flex items-center justify-center py-12 px-4">
+    <div class="w-full max-w-md">
+      <div class="bg-white rounded-2xl shadow-xl border border-border p-8">
+
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 rounded-2xl gradient-wood flex items-center justify-center text-white mx-auto mb-4 shadow-lg">
+            <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <h1 class="font-display text-3xl font-bold mb-1">Bienvenido de vuelta</h1>
+          <p class="text-muted text-sm">Inicia sesión para gestionar tus reservas</p>
+        </div>
+
+        <form id="loginForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold mb-1">Email</label>
+            <input id="email" type="email" class="input-field" required placeholder="tu@email.com" autocomplete="email"/>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold mb-1">Contraseña</label>
+            <div class="relative">
+              <input id="password" type="password" class="input-field pr-12" required placeholder="••••••••" autocomplete="current-password"/>
+              <button type="button" id="togglePass" class="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-primary">
+                <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-sm">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="recordar" class="w-4 h-4 accent-primary"/>
+              <span>Recordarme</span>
+            </label>
+            <a href="recuperar-password.html" class="text-primary hover:underline">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <button type="submit" class="btn-primary w-full py-3">
+            Iniciar sesión
+          </button>
+        </form>
+
+        <div class="relative my-6">
+          <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-border"></div></div>
+          <div class="relative flex justify-center text-xs"><span class="bg-white px-3 text-muted">o continuar con</span></div>
+        </div>
+
+        <button id="btnDemo" class="btn-outline w-full mb-6 text-sm">
+          🚀 Usar cuenta de demostración
+        </button>
+
+        <p class="text-center text-sm text-muted">
+          ¿No tienes cuenta?
+          <a href="registro.html" class="text-primary font-bold hover:underline">Crear cuenta</a>
+        </p>
+      </div>
+
+      <p class="text-center text-xs text-muted mt-6">
+        Al iniciar sesión aceptas nuestros
+        <a href="terminos.html" class="text-primary hover:underline">términos</a> y
+        <a href="privacidad.html" class="text-primary hover:underline">política de privacidad</a>.
+      </p>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      document.getElementById('togglePass').addEventListener('click', () => {
+        const p = document.getElementById('password');
+        p.type = p.type === 'password' ? 'text' : 'password';
+      });
+
+      document.getElementById('btnDemo').addEventListener('click', () => {
+        document.getElementById('email').value = 'seba@test.com';
+        document.getElementById('password').value = '123456';
+        document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+      });
+
+      document.getElementById('loginForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const r = Auth.login(email, password);
+        if (r.ok) {
+          UI.toast('Bienvenido ' + r.user.nombre.split(' ')[0], 'success');
+          const ret = new URLSearchParams(location.search).get('return');
+          setTimeout(() => window.location.href = ret === 'reserva' ? 'reserva.html' : 'perfil.html', 600);
+        } else {
+          UI.toast(r.error, 'error');
+        }
+      });
+
+      // Si ya está logueado, redirigir
+      if (Auth.isLogged()) {
+        window.location.href = 'perfil.html';
+      }
+    }
+  </script>
+</body>
+</html>

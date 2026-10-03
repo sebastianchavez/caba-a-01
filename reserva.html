@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservar cabaña · Cabañas del Bosque</title>
+  <meta name="description" content="Reserva tu cabaña en pocos pasos. Selecciona fechas, huéspedes y servicios extras." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34', 'primary-light': '#c08552', 'primary-dark': '#6b4423',
+            secondary: '#3d5f3d', 'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1', 'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce', 'background-dark': '#2c1f15', 'background-card': '#ffffff',
+            muted: '#6b5d4f', border: '#e0d2bd'
+          },
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="reserva" class="bg-background-light text-gray-800 font-sans">
+
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+    <!-- Header de la reserva -->
+    <div class="mb-8 text-center max-w-2xl mx-auto">
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-bold">Sistema de reservas</p>
+      <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-2 font-display">Reserva tu cabaña</h1>
+      <p class="text-gray-600">Completa los siguientes pasos para asegurar tu estadía.</p>
+    </div>
+
+    <!-- Indicador de pasos -->
+    <div class="steps max-w-3xl mx-auto mb-10" id="stepsIndicator">
+      <div class="step active" data-step="1">
+        <div class="step-circle">1</div>
+        <div class="step-label">Cabaña</div>
+      </div>
+      <div class="step" data-step="2">
+        <div class="step-circle">2</div>
+        <div class="step-label">Fechas</div>
+      </div>
+      <div class="step" data-step="3">
+        <div class="step-circle">3</div>
+        <div class="step-label">Huéspedes</div>
+      </div>
+      <div class="step" data-step="4">
+        <div class="step-circle">4</div>
+        <div class="step-label">Confirmar</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- COLUMNA PRINCIPAL -->
+      <div class="lg:col-span-2">
+
+        <!-- PASO 1: Cabaña -->
+        <section class="step-section bg-white rounded-2xl shadow-md p-6 lg:p-8 border border-border mb-6" data-section="1">
+          <h2 class="text-2xl font-bold font-display text-gray-900 mb-2">1. Elige tu cabaña</h2>
+          <p class="text-muted text-sm mb-6">Selecciona la cabaña que mejor se adapte a tu escapada.</p>
+
+          <div id="cabanasGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Inyectado por JS -->
+          </div>
+        </section>
+
+        <!-- PASO 2: Fechas -->
+        <section class="step-section bg-white rounded-2xl shadow-md p-6 lg:p-8 border border-border mb-6 hidden" data-section="2">
+          <h2 class="text-2xl font-bold font-display text-gray-900 mb-2">2. Selecciona las fechas</h2>
+          <p class="text-muted text-sm mb-6">Los días tachados no están disponibles.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Entrada</label>
+              <input id="fechaEntrada" type="date" class="input-field" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Salida</label>
+              <input id="fechaSalida" type="date" class="input-field" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <button id="prevMes" class="p-2 rounded-lg hover:bg-background-cream" aria-label="Mes anterior">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <p id="tituloMes1" class="font-semibold text-sm"></p>
+                <div class="w-9"></div>
+              </div>
+              <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-muted mb-1">
+                <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+              </div>
+              <div id="calendario1" class="calendar"></div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="w-9"></div>
+                <p id="tituloMes2" class="font-semibold text-sm"></p>
+                <button id="nextMes" class="p-2 rounded-lg hover:bg-background-cream" aria-label="Mes siguiente">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+              <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-muted mb-1">
+                <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+              </div>
+              <div id="calendario2" class="calendar"></div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-4 mt-5 text-xs text-muted">
+            <div class="flex items-center gap-1.5"><span class="w-4 h-4 rounded bg-primary"></span> Seleccionado</div>
+            <div class="flex items-center gap-1.5"><span class="w-4 h-4 rounded bg-accent"></span> En rango</div>
+            <div class="flex items-center gap-1.5"><span class="w-4 h-4 rounded bg-background-soft line-through opacity-60"></span> No disponible</div>
+          </div>
+        </section>
+
+        <!-- PASO 3: Huéspedes y servicios -->
+        <section class="step-section bg-white rounded-2xl shadow-md p-6 lg:p-8 border border-border mb-6 hidden" data-section="3">
+          <h2 class="text-2xl font-bold font-display text-gray-900 mb-2">3. Huéspedes y servicios</h2>
+          <p class="text-muted text-sm mb-6">Indica cuántos vienen y agrega experiencias extras.</p>
+
+          <div class="space-y-6 mb-8">
+            <div class="flex items-center justify-between p-4 bg-background-cream rounded-xl">
+              <div>
+                <p class="font-semibold">Adultos</p>
+                <p class="text-xs text-muted">13 años o más</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <button id="adultosMenos" class="w-10 h-10 rounded-full bg-white border border-border hover:bg-background-light disabled:opacity-40">-</button>
+                <span id="adultosCount" class="w-8 text-center font-bold text-lg">2</span>
+                <button id="adultosMas" class="w-10 h-10 rounded-full bg-white border border-border hover:bg-background-light">+</button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-background-cream rounded-xl">
+              <div>
+                <p class="font-semibold">Niños</p>
+                <p class="text-xs text-muted">Menores de 13 años</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <button id="ninosMenos" class="w-10 h-10 rounded-full bg-white border border-border hover:bg-background-light disabled:opacity-40">-</button>
+                <span id="ninosCount" class="w-8 text-center font-bold text-lg">0</span>
+                <button id="ninosMas" class="w-10 h-10 rounded-full bg-white border border-border hover:bg-background-light">+</button>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-bold text-lg mb-4">Servicios extras</h3>
+          <div id="serviciosList" class="space-y-3">
+            <!-- Inyectado por JS -->
+          </div>
+        </section>
+
+        <!-- PASO 4: Confirmación -->
+        <section class="step-section bg-white rounded-2xl shadow-md p-6 lg:p-8 border border-border mb-6 hidden" data-section="4">
+          <h2 class="text-2xl font-bold font-display text-gray-900 mb-2">4. Confirma tu reserva</h2>
+          <p class="text-muted text-sm mb-6">Revisa los detalles antes de continuar al pago.</p>
+
+          <div id="loginCheck" class="hidden mb-6 bg-accent/20 border border-accent rounded-xl p-4 flex items-start gap-3">
+            <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="flex-1">
+              <p class="font-semibold text-sm">¿No tienes cuenta?</p>
+              <p class="text-xs text-muted">Para continuar, inicia sesión o regístrate. Solo tomará un minuto.</p>
+            </div>
+            <a href="inicio-sesion.html" class="btn-outline text-xs px-3 py-1.5">Iniciar sesión</a>
+          </div>
+
+          <div class="bg-background-cream rounded-xl p-5 mb-4">
+            <h3 class="font-bold mb-3 text-sm uppercase tracking-wider text-muted">Resumen de tu estadía</h3>
+            <div id="resumenFinal" class="space-y-3 text-sm"></div>
+          </div>
+
+          <div class="bg-background-cream rounded-xl p-5">
+            <h3 class="font-bold mb-3 text-sm uppercase tracking-wider text-muted">Datos del huésped</h3>
+            <div id="datosHuesped" class="text-sm space-y-2"></div>
+          </div>
+        </section>
+
+        <!-- Navegación entre pasos -->
+        <div class="flex items-center justify-between mt-6">
+          <button id="btnAtras" class="btn-ghost hidden">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Atrás
+          </button>
+          <button id="btnSiguiente" class="btn-primary ml-auto">
+            Siguiente
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- SIDEBAR RESUMEN -->
+      <aside class="lg:col-span-1">
+        <div class="sticky top-24 bg-white rounded-2xl shadow-md p-6 border border-border">
+          <h3 class="font-display text-xl font-bold mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            Resumen
+          </h3>
+
+          <div id="resumenSidebar" class="space-y-3 mb-5">
+            <div class="text-center py-8 text-sm text-muted">
+              <svg class="w-12 h-12 mx-auto mb-2 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              Selecciona una cabaña para comenzar
+            </div>
+          </div>
+
+          <div class="border-t border-border pt-4 hidden" id="totalSidebar">
+            <div class="flex justify-between items-baseline">
+              <p class="font-bold">Total</p>
+              <p id="totalMonto" class="font-display text-2xl font-bold text-primary">S/ 0</p>
+            </div>
+            <p class="text-xs text-muted mt-1">Impuestos incluidos</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    /* Estado del wizard */
+    const STATE = {
+      paso: 1,
+      cabanaId: null,
+      fechaEntrada: null,
+      fechaSalida: null,
+      adultos: 2,
+      niños: 0,
+      servicios: []
+    };
+
+    let mesActual = new Date();
+    mesActual.setDate(1);
+
+    function pageInit() {
+      // Preseleccionar cabaña desde URL
+      const params = new URLSearchParams(location.search);
+      const cabanaParam = params.get('cabana');
+      const entradaParam = params.get('entrada');
+      const salidaParam = params.get('salida');
+
+      // Pintar cabañas
+      const grid = document.getElementById('cabanasGrid');
+      grid.innerHTML = CABAÑAS.map(c => `
+        <label class="cursor-pointer">
+          <input type="radio" name="cabanaSel" value="${c.id}" class="sr-only peer" ${cabanaParam === c.id ? 'checked' : ''}/>
+          <div class="rounded-xl border-2 border-border overflow-hidden peer-checked:border-primary peer-checked:shadow-lg transition-all card-hover bg-white">
+            <div class="aspect-[16/10] overflow-hidden relative img-fallback" style="background-color:#ede0ce;">
+              <img src="${c.imagenes[0]}" alt="${c.nombre}" class="w-full h-full object-cover card-image relative z-10" loading="lazy"/>
+              <div class="absolute top-2 right-2 bg-white/90 backdrop-blur px-2.5 py-0.5 rounded-full text-xs font-bold text-primary z-20">
+                ${UI.formatMoneda(c.precioNoche)}/noche
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-bold text-base mb-1">${c.nombre}</h4>
+              <p class="text-xs text-muted mb-2">${c.eslogan}</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="amenity-pill text-[10px] py-0.5 px-2">${c.capacidad} pers</span>
+                <span class="amenity-pill text-[10px] py-0.5 px-2">${c.habitaciones} hab</span>
+              </div>
+            </div>
+          </div>
+        </label>
+      `).join('');
+
+      grid.querySelectorAll('input[name="cabanaSel"]').forEach(input => {
+        input.addEventListener('change', e => {
+          STATE.cabanaId = e.target.value;
+          actualizarResumen();
+        });
+        if (input.checked) STATE.cabanaId = input.value;
+      });
+
+      // Servicios
+      const sList = document.getElementById('serviciosList');
+      sList.innerHTML = SERVICIOS.map(s => `
+        <label class="flex items-start gap-3 p-4 border border-border rounded-xl cursor-pointer hover:border-primary has-[:checked]:border-primary has-[:checked]:bg-background-cream">
+          <input type="checkbox" value="${s.id}" class="servicio-check mt-1 w-5 h-5 accent-primary"/>
+          <div class="flex-1">
+            <div class="flex items-start justify-between gap-2">
+              <p class="font-semibold text-sm">${s.nombre}</p>
+              <span class="font-bold text-primary text-sm whitespace-nowrap">+${UI.formatMoneda(s.precio)}</span>
+            </div>
+            <p class="text-xs text-muted mt-1">${s.descripcion}</p>
+          </div>
+        </label>
+      `).join('');
+
+      sList.querySelectorAll('.servicio-check').forEach(chk => {
+        chk.addEventListener('change', () => {
+          STATE.servicios = Array.from(sList.querySelectorAll('.servicio-check:checked')).map(c => c.value);
+          actualizarResumen();
+        });
+      });
+
+      // Contadores
+      document.getElementById('adultosMas').addEventListener('click', () => {
+        STATE.adultos = Math.min(STATE.adultos + 1, 10);
+        document.getElementById('adultosCount').textContent = STATE.adultos;
+        actualizarResumen();
+      });
+      document.getElementById('adultosMenos').addEventListener('click', () => {
+        STATE.adultos = Math.max(1, STATE.adultos - 1);
+        document.getElementById('adultosCount').textContent = STATE.adultos;
+        actualizarResumen();
+      });
+      document.getElementById('ninosMas').addEventListener('click', () => {
+        STATE.niños = Math.min(STATE.niños + 1, 10);
+        document.getElementById('ninosCount').textContent = STATE.niños;
+        actualizarResumen();
+      });
+      document.getElementById('ninosMenos').addEventListener('click', () => {
+        STATE.niños = Math.max(0, STATE.niños - 1);
+        document.getElementById('ninosCount').textContent = STATE.niños;
+        actualizarResumen();
+      });
+
+      // Calendario
+      document.getElementById('prevMes').addEventListener('click', () => {
+        mesActual.setMonth(mesActual.getMonth() - 1);
+        renderCalendarios();
+      });
+      document.getElementById('nextMes').addEventListener('click', () => {
+        mesActual.setMonth(mesActual.getMonth() + 1);
+        renderCalendarios();
+      });
+
+      // Fechas input
+      const fIn = document.getElementById('fechaEntrada');
+      const fOut = document.getElementById('fechaSalida');
+      const hoy = new Date().toISOString().split('T')[0];
+      const manana = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+      fIn.min = hoy;
+      fOut.min = manana;
+
+      if (entradaParam) { fIn.value = entradaParam; STATE.fechaEntrada = entradaParam; }
+      if (salidaParam) { fOut.value = salidaParam; STATE.fechaSalida = salidaParam; }
+
+      fIn.addEventListener('change', () => {
+        STATE.fechaEntrada = fIn.value;
+        if (STATE.fechaSalida && STATE.fechaSalida <= STATE.fechaEntrada) {
+          const sig = new Date(STATE.fechaEntrada);
+          sig.setDate(sig.getDate() + 1);
+          STATE.fechaSalida = sig.toISOString().split('T')[0];
+          fOut.value = STATE.fechaSalida;
+        }
+        renderCalendarios();
+        actualizarResumen();
+      });
+      fOut.addEventListener('change', () => {
+        STATE.fechaSalida = fOut.value;
+        renderCalendarios();
+        actualizarResumen();
+      });
+
+      renderCalendarios();
+
+      // Navegación
+      document.getElementById('btnAtras').addEventListener('click', () => {
+        if (STATE.paso > 1) {
+          STATE.paso--;
+          actualizarPasos();
+        }
+      });
+      document.getElementById('btnSiguiente').addEventListener('click', () => {
+        const valid = validarPaso();
+        if (!valid.ok) {
+          UI.toast(valid.msg, 'error');
+          return;
+        }
+        if (STATE.paso < 4) {
+          STATE.paso++;
+          actualizarPasos();
+        } else {
+          confirmarReserva();
+        }
+      });
+
+      actualizarPasos();
+      actualizarResumen();
+    }
+
+    function validarPaso() {
+      if (STATE.paso === 1 && !STATE.cabanaId) return { ok: false, msg: 'Selecciona una cabaña.' };
+      if (STATE.paso === 2) {
+        if (!STATE.fechaEntrada || !STATE.fechaSalida) return { ok: false, msg: 'Selecciona fecha de entrada y salida.' };
+        if (STATE.fechaSalida <= STATE.fechaEntrada) return { ok: false, msg: 'La salida debe ser posterior a la entrada.' };
+        const cabana = Cabanas.getById(STATE.cabanaId);
+        const ocupados = Cabanas.diasOcupados(STATE.cabanaId, STATE.fechaEntrada, STATE.fechaSalida);
+        if (ocupados.length > 0) {
+          return { ok: false, msg: 'Hay fechas no disponibles en el rango seleccionado.' };
+        }
+        const cabanaCap = cabana.capacidad;
+        if (STATE.adultos + STATE.niños > cabanaCap) return { ok: false, msg: 'La capacidad máxima es ' + cabanaCap + ' personas.' };
+      }
+      if (STATE.paso === 4) {
+        if (!Auth.isLogged()) {
+          UI.modal({
+            titulo: 'Inicia sesión para continuar',
+            mensaje: 'Necesitas una cuenta para confirmar tu reserva. Es rápido y gratis.',
+            confirmLabel: 'Iniciar sesión',
+            cancelLabel: 'Registrarme',
+            confirmClass: 'btn-primary',
+            onConfirm: () => { window.location.href = 'inicio-sesion.html?return=reserva'; },
+            onCancel: () => { window.location.href = 'registro.html?return=reserva'; }
+          });
+          return { ok: false, msg: 'Requiere inicio de sesión.' };
+        }
+      }
+      return { ok: true };
+    }
+
+    function actualizarPasos() {
+      document.querySelectorAll('.step').forEach(el => {
+        const n = parseInt(el.dataset.step);
+        el.classList.remove('active', 'completed');
+        if (n === STATE.paso) el.classList.add('active');
+        else if (n < STATE.paso) el.classList.add('completed');
+      });
+      document.querySelectorAll('.step-section').forEach(el => {
+        if (parseInt(el.dataset.section) === STATE.paso) el.classList.remove('hidden');
+        else el.classList.add('hidden');
+      });
+      const btnA = document.getElementById('btnAtras');
+      const btnS = document.getElementById('btnSiguiente');
+      btnA.classList.toggle('hidden', STATE.paso === 1);
+      if (STATE.paso === 4) {
+        btnS.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Confirmar y pagar';
+      } else {
+        btnS.innerHTML = 'Siguiente <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>';
+      }
+    }
+
+    function renderCalendarios() {
+      const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+      const ocupados = STATE.cabanaId ? new Set(Cabanas.diasOcupados(STATE.cabanaId)) : new Set();
+      const hoy = new Date(); hoy.setHours(0,0,0,0);
+
+      const renderMes = (fechaContenedor, containerId, tituloId) => {
+        const year = fechaContenedor.getFullYear();
+        const mes = fechaContenedor.getMonth();
+        document.getElementById(tituloId).textContent = meses[mes] + ' ' + year;
+        const cont = document.getElementById(containerId);
+        cont.innerHTML = '';
+        const primerDia = new Date(year, mes, 1);
+        const ultimoDia = new Date(year, mes + 1, 0);
+        const offset = primerDia.getDay();
+
+        for (let i = 0; i < offset; i++) {
+          const e = document.createElement('div');
+          e.className = 'calendar-day empty';
+          cont.appendChild(e);
+        }
+
+        for (let d = 1; d <= ultimoDia.getDate(); d++) {
+          const fecha = new Date(year, mes, d);
+          const iso = fecha.toISOString().split('T')[0];
+          const dayEl = document.createElement('div');
+          dayEl.className = 'calendar-day';
+          dayEl.textContent = d;
+
+          if (fecha < hoy) {
+            dayEl.classList.add('disabled');
+          } else if (ocupados.has(iso)) {
+            dayEl.classList.add('disabled');
+          } else {
+            dayEl.addEventListener('click', () => seleccionarFecha(iso));
+          }
+
+          if (iso === STATE.fechaEntrada || iso === STATE.fechaSalida) dayEl.classList.add('selected');
+          if (STATE.fechaEntrada && STATE.fechaSalida && fecha > new Date(STATE.fechaEntrada) && fecha < new Date(STATE.fechaSalida)) {
+            dayEl.classList.add('in-range');
+          }
+          if (fecha.getTime() === hoy.getTime()) dayEl.classList.add('today');
+          cont.appendChild(dayEl);
+        }
+      };
+
+      const mes2 = new Date(mesActual);
+      mes2.setMonth(mes2.getMonth() + 1);
+      renderMes(mesActual, 'calendario1', 'tituloMes1');
+      renderMes(mes2, 'calendario2', 'tituloMes2');
+    }
+
+    function seleccionarFecha(iso) {
+      if (!STATE.fechaEntrada || (STATE.fechaEntrada && STATE.fechaSalida)) {
+        STATE.fechaEntrada = iso;
+        STATE.fechaSalida = null;
+      } else if (iso <= STATE.fechaEntrada) {
+        STATE.fechaEntrada = iso;
+      } else {
+        STATE.fechaSalida = iso;
+      }
+      document.getElementById('fechaEntrada').value = STATE.fechaEntrada || '';
+      document.getElementById('fechaSalida').value = STATE.fechaSalida || '';
+      renderCalendarios();
+      actualizarResumen();
+    }
+
+    function actualizarResumen() {
+      const cabana = Cabanas.getById(STATE.cabanaId);
+      const sidebar = document.getElementById('resumenSidebar');
+      const totalBox = document.getElementById('totalSidebar');
+
+      if (!cabana) {
+        sidebar.innerHTML = '<div class="text-center py-8 text-sm text-muted"><svg class="w-12 h-12 mx-auto mb-2 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>Selecciona una cabaña para comenzar</div>';
+        totalBox.classList.add('hidden');
+        return;
+      }
+
+      totalBox.classList.remove('hidden');
+
+      const html = [];
+      html.push(`<div class="flex gap-3 mb-3 pb-3 border-b border-border">
+        <div class="img-fallback w-16 h-16 rounded-lg overflow-hidden shrink-0" style="background-color:#ede0ce;">
+          <img src="${cabana.imagenes[0]}" alt="${cabana.nombre}" class="w-full h-full object-cover relative z-10" loading="lazy"/>
+        </div>
+        <div class="flex-1">
+          <p class="font-bold text-sm">${cabana.nombre}</p>
+          <p class="text-xs text-muted">${cabana.habitaciones} hab · cap ${cabana.capacidad}</p>
+        </div>
+      </div>`);
+
+      if (STATE.fechaEntrada && STATE.fechaSalida) {
+        const noches = UI.diffDias(STATE.fechaEntrada, STATE.fechaSalida);
+        html.push(`<div class="flex justify-between text-sm"><span class="text-muted">Entrada</span><span class="font-semibold">${UI.formatFecha(STATE.fechaEntrada)}</span></div>`);
+        html.push(`<div class="flex justify-between text-sm"><span class="text-muted">Salida</span><span class="font-semibold">${UI.formatFecha(STATE.fechaSalida)}</span></div>`);
+        html.push(`<div class="flex justify-between text-sm"><span class="text-muted">Noches</span><span class="font-semibold">${noches}</span></div>`);
+      } else {
+        html.push(`<div class="text-center text-xs text-muted py-2">Selecciona las fechas</div>`);
+      }
+
+      html.push(`<div class="flex justify-between text-sm"><span class="text-muted">Huéspedes</span><span class="font-semibold">${STATE.adultos + STATE.niños} (${STATE.adultos} ad, ${STATE.niños} ni)</span></div>`);
+
+      if (STATE.servicios.length > 0) {
+        html.push(`<div class="pt-2 border-t border-border"><p class="text-xs text-muted mb-1 font-semibold uppercase tracking-wider">Servicios</p>`);
+        STATE.servicios.forEach(id => {
+          const sv = SERVICIOS.find(s => s.id === id);
+          if (sv) html.push(`<div class="flex justify-between text-xs"><span>${sv.nombre}</span><span>${UI.formatMoneda(sv.precio)}</span></div>`);
+        });
+        html.push(`</div>`);
+      }
+
+      sidebar.innerHTML = html.join('');
+
+      const total = (STATE.fechaEntrada && STATE.fechaSalida)
+        ? Reservas.calcularTotal(STATE.cabanaId, STATE.fechaEntrada, STATE.fechaSalida, STATE.servicios)
+        : 0;
+      document.getElementById('totalMonto').textContent = UI.formatMoneda(total);
+
+      // Actualizar resumen final del paso 4
+      const resumen = document.getElementById('resumenFinal');
+      if (resumen) {
+        if (STATE.fechaEntrada && STATE.fechaSalida && total > 0) {
+          const noches = UI.diffDias(STATE.fechaEntrada, STATE.fechaSalida);
+          resumen.innerHTML = `
+            <div class="flex justify-between"><span class="text-muted">Cabaña</span><span class="font-semibold">${cabana.nombre}</span></div>
+            <div class="flex justify-between"><span class="text-muted">Fechas</span><span class="font-semibold">${UI.formatFecha(STATE.fechaEntrada)} → ${UI.formatFecha(STATE.fechaSalida)}</span></div>
+            <div class="flex justify-between"><span class="text-muted">Noches</span><span class="font-semibold">${noches}</span></div>
+            <div class="flex justify-between"><span class="text-muted">Huéspedes</span><span class="font-semibold">${STATE.adultos + STATE.niños}</span></div>
+            <div class="border-t border-border pt-3 mt-3 flex justify-between items-baseline"><span class="font-bold">Total</span><span class="font-display text-2xl font-bold text-primary">${UI.formatMoneda(total)}</span></div>
+          `;
+        } else {
+          resumen.innerHTML = '<p class="text-muted text-sm">Completa los pasos anteriores.</p>';
+        }
+      }
+
+      // Datos huésped
+      const huesped = document.getElementById('datosHuesped');
+      if (huesped) {
+        if (Auth.isLogged()) {
+          const u = Auth.current();
+          huesped.innerHTML = `
+            <p><span class="text-muted">Nombre:</span> <span class="font-semibold">${u.nombre}</span></p>
+            <p><span class="text-muted">Email:</span> <span class="font-semibold">${u.email}</span></p>
+            <p><span class="text-muted">Teléfono:</span> <span class="font-semibold">${u.telefono || 'No registrado'}</span></p>
+          `;
+          document.getElementById('loginCheck').classList.add('hidden');
+        } else {
+          huesped.innerHTML = '<p class="text-muted text-sm">Necesitas iniciar sesión para confirmar.</p>';
+          document.getElementById('loginCheck').classList.remove('hidden');
+        }
+      }
+    }
+
+    function confirmarReserva() {
+      const total = Reservas.calcularTotal(STATE.cabanaId, STATE.fechaEntrada, STATE.fechaSalida, STATE.servicios);
+      const u = Auth.current();
+      const nueva = Reservas.create({
+        userId: u.id,
+        cabanaId: STATE.cabanaId,
+        fechaEntrada: STATE.fechaEntrada,
+        fechaSalida: STATE.fechaSalida,
+        huespedes: STATE.adultos + STATE.niños,
+        adultos: STATE.adultos,
+        niños: STATE.niños,
+        servicios: STATE.servicios,
+        total
+      });
+      Storage.set(STORAGE_KEYS.PAGO_DRAFT, nueva.id);
+      window.location.href = 'confirmacion.html?id=' + nueva.id;
+    }
+  </script>
+</body>
+</html>

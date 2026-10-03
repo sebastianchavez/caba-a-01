@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cabañas del Bosque · Escapadas únicas en la montaña</title>
+  <meta name="description" content="Reserva tu cabaña en medio del bosque. Jacuzzi privado, chimenea, vistas únicas y experiencias inolvidables en la naturaleza." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34',
+            'primary-light': '#c08552',
+            'primary-dark': '#6b4423',
+            secondary: '#3d5f3d',
+            'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1',
+            'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce',
+            'background-dark': '#2c1f15',
+            'background-card': '#ffffff',
+            muted: '#6b5d4f',
+            border: '#e0d2bd'
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="inicio" class="bg-background-light text-gray-800 font-sans">
+
+  <div id="appHeader"></div>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="relative min-h-[90vh] flex items-center gradient-overlay hero-fallback" style="background-image: url('https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=1920&q=85&auto=format&fit=crop'); background-size: cover; background-position: center; background-color: #2c1f15;">
+      <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="max-w-3xl">
+          <p class="text-accent uppercase tracking-[0.3em] text-sm mb-4 font-semibold flex items-center gap-2">
+            <span class="pulse-dot"></span> Bienvenido a la montaña
+          </p>
+          <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1.05] mb-6 font-display">
+            Escapa a la <span class="italic text-accent">naturaleza</span>
+          </h1>
+          <p class="text-lg md:text-xl text-gray-100 max-w-2xl mb-10 leading-relaxed">
+            Cabañas rústicas y acogedoras rodeadas de bosque. Chimenea, jacuzzi privado y vistas que quitan el aliento. Tu próxima aventura empieza aquí.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="reserva.html" class="btn-primary text-base px-6 py-3.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              Reservar ahora
+            </a>
+            <a href="#cabanas" class="btn-outline text-base px-6 py-3.5 bg-white/10 border-white text-white hover:bg-white hover:text-primary backdrop-blur-sm">Ver cabañas</a>
+          </div>
+          <div class="mt-12 flex flex-wrap items-center gap-6 text-sm text-gray-200">
+            <div class="flex items-center gap-2"><svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Cancelación flexible</div>
+            <div class="flex items-center gap-2"><svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Reserva segura</div>
+            <div class="flex items-center gap-2"><svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> Confirmación inmediata</div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+        <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+      </div>
+    </section>
+
+    <!-- BUSCADOR RÁPIDO -->
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
+      <div class="bg-white rounded-2xl shadow-2xl p-6 lg:p-8 border border-border max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-muted font-semibold mb-1">Cabaña</label>
+            <select id="qCabana" class="input-field">
+              <option value="">Cualquier cabaña</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-muted font-semibold mb-1">Entrada</label>
+            <input id="qEntrada" type="date" class="input-field" />
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-muted font-semibold mb-1">Salida</label>
+            <input id="qSalida" type="date" class="input-field" />
+          </div>
+          <button id="qBuscar" class="btn-primary text-base py-3">Buscar disponibilidad</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS -->
+    <section class="py-20 lg:py-28 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-bold">Sobre nosotros</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-display leading-tight">Donde el bosque abraza cada momento</h2>
+          <p class="text-gray-600 leading-relaxed mb-5 text-lg">
+            En <span class="text-primary font-semibold">Cabañas del Bosque</span> llevamos más de 15 años creando recuerdos inolvidables. Nuestras cabañas fueron diseñadas para integrarse armoniosamente con el entorno natural, ofreciendo todas las comodidades modernas sin perder la esencia rústica y acogedora.
+          </p>
+          <p class="text-gray-600 leading-relaxed mb-8">
+            Cada detalle fue pensado para tu comodidad: desde la ropa de cama de algodón orgánico hasta las chimeneas que crepitan suavemente al caer la tarde. Ven y descubre por qué nuestros huéspedes vuelven una y otra vez.
+          </p>
+          <div class="grid grid-cols-3 gap-6 mb-8">
+            <div>
+              <p class="text-3xl md:text-4xl font-bold text-primary font-display">15+</p>
+              <p class="text-xs uppercase tracking-wider text-muted mt-1 font-semibold">Años</p>
+            </div>
+            <div>
+              <p class="text-3xl md:text-4xl font-bold text-primary font-display">4.9</p>
+              <p class="text-xs uppercase tracking-wider text-muted mt-1 font-semibold">Rating</p>
+            </div>
+            <div>
+              <p class="text-3xl md:text-4xl font-bold text-primary font-display">3K+</p>
+              <p class="text-xs uppercase tracking-wider text-muted mt-1 font-semibold">Huéspedes felices</p>
+            </div>
+          </div>
+          <a href="contacto.html" class="btn-outline">Conoce más</a>
+        </div>
+        <div class="relative">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="img-fallback rounded-2xl shadow-lg overflow-hidden hover-zoom" style="background-color:#ede0ce;">
+              <img src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=600&q=80&auto=format&fit=crop" alt="Cabaña El Pino" class="w-full h-64 object-cover relative z-10" loading="lazy" />
+            </div>
+            <div class="img-fallback rounded-2xl shadow-lg overflow-hidden hover-zoom mt-12" style="background-color:#ede0ce;">
+              <img src="https://images.unsplash.com/photo-1502784444187-359ac186c5fa?w=600&q=80&auto=format&fit=crop" alt="Cabaña El Roble" class="w-full h-64 object-cover relative z-10" loading="lazy" />
+            </div>
+            <div class="img-fallback rounded-2xl shadow-lg overflow-hidden hover-zoom -mt-6" style="background-color:#ede0ce;">
+              <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=600&q=80&auto=format&fit=crop" alt="Cabaña El Cedro" class="w-full h-64 object-cover relative z-10" loading="lazy" />
+            </div>
+            <div class="img-fallback rounded-2xl shadow-lg overflow-hidden hover-zoom mt-6" style="background-color:#ede0ce;">
+              <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?w=600&q=80&auto=format&fit=crop" alt="Cabaña El Álamo" class="w-full h-64 object-cover relative z-10" loading="lazy" />
+            </div>
+          </div>
+          <div class="absolute -top-4 -right-4 bg-primary text-white rounded-2xl p-4 shadow-xl">
+            <p class="text-3xl font-bold font-display">15+</p>
+            <p class="text-xs uppercase tracking-wider">Años</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CABAÑAS DESTACADAS -->
+    <section id="cabanas" class="py-20 lg:py-24 bg-background-cream">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-bold">Nuestras cabañas</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-display">Encuentra tu refugio ideal</h2>
+          <p class="text-gray-600">Cada cabaña tiene personalidad propia. Desde escapadas románticas hasta reuniones familiares.</p>
+        </div>
+
+        <div id="cabanasGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Inyectado por JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS DESTACADOS -->
+    <section class="py-20 lg:py-24 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
+        <div>
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-bold">Servicios premium</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-display leading-tight">Experiencias que elevan tu estadía</h2>
+        </div>
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Más allá de una cabaña, ofrecemos experiencias cuidadosamente diseñadas para que cada momento sea memorable. Desde cenas íntimas hasta aventuras en la naturaleza.
+        </p>
+      </div>
+
+      <div id="serviciosGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Inyectado por JS -->
+      </div>
+      <div class="text-center mt-10">
+        <a href="servicios.html" class="btn-outline">Ver todos los servicios</a>
+      </div>
+    </section>
+
+    <!-- PAQUETES -->
+    <section class="py-20 lg:py-24 bg-secondary text-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <p class="text-accent uppercase tracking-[0.3em] text-xs mb-3 font-bold">Paquetes especiales</p>
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 font-display">Combos con descuento</h2>
+          <p class="text-white/70">Ahorra más con nuestros paquetes que combinan cabaña y servicios exclusivos.</p>
+        </div>
+        <div id="paquetesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Inyectado por JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="py-20 lg:py-24 bg-background-light">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-bold">Testimonios</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-display">Lo que dicen nuestros huéspedes</h2>
+          <div class="flex items-center justify-center gap-1 mt-4">
+            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.783.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.783.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.783.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.783.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.783.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <span class="ml-2 text-sm text-muted font-semibold">4.9 sobre 5 (320+ reseñas)</span>
+          </div>
+        </div>
+
+        <div id="testimoniosGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Inyectado por JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="py-20 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1502784444187-359ac186c5fa?w=1920&q=85&auto=format&fit=crop" alt="Cabañas" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-r from-background-dark via-background-dark/90 to-background-dark/70"></div>
+      </div>
+      <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+        <h2 class="text-4xl md:text-6xl font-bold font-display mb-6 leading-tight">Tu próxima aventura<br/><span class="italic text-accent">te está esperando</span></h2>
+        <p class="text-xl text-white/80 max-w-2xl mx-auto mb-10">Reserva hoy y obtén un 10% de descuento en estadías de 3 o más noches.</p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="reserva.html" class="btn-primary text-base px-8 py-4">Reservar ahora</a>
+          <a href="contacto.html" class="btn-outline border-white text-white hover:bg-white hover:text-primary text-base px-8 py-4">Hablar con nosotros</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      // Fechas mínimas en buscador
+      const hoy = new Date().toISOString().split('T')[0];
+      const manana = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+      document.getElementById('qEntrada').min = hoy;
+      document.getElementById('qSalida').min = manana;
+
+      // Llenar selector de cabañas
+      const selCab = document.getElementById('qCabana');
+      CABAÑAS.forEach(c => {
+        const o = document.createElement('option');
+        o.value = c.id;
+        o.textContent = c.nombre + ' · ' + c.habitaciones + ' hab · cap ' + c.capacidad;
+        selCab.appendChild(o);
+      });
+
+      document.getElementById('qBuscar').addEventListener('click', () => {
+        const cabana = selCab.value;
+        const entrada = document.getElementById('qEntrada').value;
+        const salida = document.getElementById('qSalida').value;
+        const params = new URLSearchParams();
+        if (cabana) params.set('cabana', cabana);
+        if (entrada) params.set('entrada', entrada);
+        if (salida) params.set('salida', salida);
+        window.location.href = 'reserva.html' + (params.toString() ? '?' + params.toString() : '');
+      });
+
+      // Pintar cabañas destacadas
+      const grid = document.getElementById('cabanasGrid');
+      grid.innerHTML = CABAÑAS.map(c => `
+        <article class="bg-white rounded-2xl overflow-hidden shadow-md card-hover flex flex-col">
+          <div class="relative overflow-hidden aspect-[4/3] img-fallback" style="background-color:#ede0ce;">
+            <img src="${c.imagenes[0]}" alt="${c.nombre}" class="card-image w-full h-full object-cover relative z-10" loading="lazy"/>
+            <div class="absolute top-3 left-3 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary z-20">
+              ${c.habitaciones} hab · ${c.capacidad} pers
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col">
+            <h3 class="font-display text-xl font-bold text-gray-900 mb-1">${c.nombre}</h3>
+            <p class="text-sm text-muted mb-3 flex-1">${c.eslogan}</p>
+            <div class="flex items-center justify-between pt-3 border-t border-border">
+              <div>
+                <p class="text-xs text-muted">Desde</p>
+                <p class="font-display text-xl font-bold text-primary">${UI.formatMoneda(c.precioNoche)}<span class="text-xs text-muted font-sans font-normal">/noche</span></p>
+              </div>
+              <a href="reserva.html?cabana=${c.id}" class="btn-primary text-xs px-4 py-2">Reservar</a>
+            </div>
+          </div>
+        </article>
+      `).join('');
+
+      // Servicios destacados (primeros 6)
+      const sGrid = document.getElementById('serviciosGrid');
+      sGrid.innerHTML = SERVICIOS.map(s => `
+        <div class="bg-white rounded-2xl p-6 shadow-sm card-hover border border-border">
+          <div class="w-14 h-14 rounded-xl bg-background-cream flex items-center justify-center mb-4 text-primary">
+            ${iconoServicio(s.icono)}
+          </div>
+          <div class="flex items-start justify-between mb-2">
+            <h3 class="font-display text-lg font-bold text-gray-900">${s.nombre}</h3>
+            <span class="font-bold text-primary whitespace-nowrap ml-2">${UI.formatMoneda(s.precio)}</span>
+          </div>
+          <p class="text-sm text-muted leading-relaxed">${s.descripcion}</p>
+        </div>
+      `).join('');
+
+      // Paquetes
+      const pGrid = document.getElementById('paquetesGrid');
+      pGrid.innerHTML = PAQUETES.map(p => `
+        <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-7 border border-white/10 card-hover">
+          <div class="inline-block bg-accent text-background-dark text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-4">-${p.descuento}% OFF</div>
+          <h3 class="font-display text-2xl font-bold mb-2">${p.nombre}</h3>
+          <p class="text-white/70 text-sm mb-5">${p.descripcion}</p>
+          <div class="flex items-baseline gap-2 mb-5">
+            <span class="font-display text-3xl font-bold text-accent">${UI.formatMoneda(p.precioTotal)}</span>
+            <span class="text-white/50 line-through text-sm">${UI.formatMoneda(p.precioRegular)}</span>
+          </div>
+          <a href="precios.html" class="block w-full text-center py-3 bg-accent text-background-dark rounded-lg font-semibold hover:bg-white transition">Ver paquete</a>
+        </div>
+      `).join('');
+
+      // Testimonios
+      const tGrid = document.getElementById('testimoniosGrid');
+      tGrid.innerHTML = TESTIMONIOS.map(t => `
+        <div class="bg-white rounded-2xl p-7 shadow-sm card-hover border border-border">
+          <div class="flex items-center gap-1 mb-4">
+            ${Array.from({length: t.rating}).map(() => '<svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.783.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>').join('')}
+          </div>
+          <p class="text-gray-700 leading-relaxed mb-6 italic">"${t.texto}"</p>
+          <div class="flex items-center gap-3">
+            <div class="img-fallback w-12 h-12 rounded-full overflow-hidden ring-2 ring-primary/20 shrink-0" style="background-color:#ede0ce;">
+              <img src="${t.avatar}" alt="${t.nombre}" class="w-full h-full object-cover relative z-10" loading="lazy"/>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">${t.nombre}</p>
+              <p class="text-xs text-muted">${t.lugar}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function iconoServicio(tipo) {
+      const iconos = {
+        utensils: '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l1.664 1.664M21 21l-1.5-1.5m-5.485-1.242L12 17.25 4.5 21l1.5-7.5L12 7.5l6 6 1.5 7.5-7.485-4.242zM12 7.5L8.5 11m7-7L12 7.5"/></svg>',
+        wine: '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21V9m0 0a4 4 0 100-8 4 4 0 000 8zm0 0v12m-4 0h8"/></svg>',
+        tree: '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>',
+        spa: '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>',
+        fire: '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>',
+        mountain: '<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21l6-9 4 6 4-4 4 7H3z"/></svg>'
+      };
+      return iconos[tipo] || iconos.tree;
+    }
+  </script>
+</body>
+</html>

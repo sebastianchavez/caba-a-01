@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galería · Cabañas del Bosque</title>
+  <meta name="description" content="Descubre la belleza de nuestras cabañas y el bosque que las rodea." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34', 'primary-light': '#c08552', 'primary-dark': '#6b4423',
+            secondary: '#3d5f3d', 'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1', 'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce', 'background-dark': '#2c1f15', 'background-card': '#ffffff',
+            muted: '#6b5d4f', border: '#e0d2bd'
+          },
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .masonry { column-count: 1; column-gap: 1rem; }
+    @media (min-width: 640px) { .masonry { column-count: 2; } }
+    @media (min-width: 1024px) { .masonry { column-count: 3; } }
+    .masonry-item { break-inside: avoid; margin-bottom: 1rem; }
+  </style>
+</head>
+<body data-page="galeria" class="bg-background-light text-gray-800 font-sans">
+
+  <div id="appHeader"></div>
+
+  <main>
+    <!-- HERO -->
+    <section class="relative h-[50vh] flex items-center gradient-overlay hero-fallback" style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=85&auto=format&fit=crop'); background-size: cover; background-position: center; background-color: #2c1f15;">
+      <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl">
+          <p class="text-accent uppercase tracking-[0.3em] text-sm mb-4 font-bold">Galería</p>
+          <h1 class="text-5xl md:text-7xl font-black text-white leading-[1.05] mb-6 font-display">
+            Un vistazo al <span class="italic text-accent">bosque</span>
+          </h1>
+          <p class="text-lg md:text-xl text-gray-100 max-w-2xl leading-relaxed">
+            Descubre la magia de nuestras cabañas, el entorno natural y los momentos que te esperan.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTROS -->
+    <section class="py-10 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap gap-3 justify-center">
+        <button data-filter="all" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-primary text-white">Todas</button>
+        <button data-filter="cabanas" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-white border border-border text-gray-700 hover:bg-background-cream">Cabañas</button>
+        <button data-filter="entorno" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-white border border-border text-gray-700 hover:bg-background-cream">Entorno</button>
+        <button data-filter="experiencias" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-white border border-border text-gray-700 hover:bg-background-cream">Experiencias</button>
+        <button data-filter="gastronomia" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-white border border-border text-gray-700 hover:bg-background-cream">Gastronomía</button>
+      </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section class="pb-16 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="galeriaGrid" class="masonry">
+        <!-- Inyectado por JS -->
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-secondary text-white text-center">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold font-display mb-4">¿Te imaginas aquí?</h2>
+        <p class="text-white/70 max-w-2xl mx-auto mb-8">Reserva tu próxima aventura en Cabañas del Bosque.</p>
+        <a href="reserva.html" class="btn-primary bg-accent text-background-dark hover:bg-white text-base px-8 py-3.5">Reservar ahora</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const galeria = [
+        { cat: 'cabanas', img: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&q=80&auto=format&fit=crop', titulo: 'Cabaña El Pino' },
+        { cat: 'cabanas', img: 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=800&q=80&auto=format&fit=crop', titulo: 'Exterior cabaña' },
+        { cat: 'entorno', img: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80&auto=format&fit=crop', titulo: 'Bosque al amanecer' },
+        { cat: 'experiencias', img: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&q=80&auto=format&fit=crop', titulo: 'Fogata nocturna' },
+        { cat: 'cabanas', img: 'https://images.unsplash.com/photo-1502784444187-359ac186c5fa?w=800&q=80&auto=format&fit=crop', titulo: 'Cabaña El Roble' },
+        { cat: 'entorno', img: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80&auto=format&fit=crop', titulo: 'Atardecer en la montaña' },
+        { cat: 'experiencias', img: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&q=80&auto=format&fit=crop', titulo: 'Jacuzzi privado' },
+        { cat: 'gastronomia', img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format&fit=crop', titulo: 'Cena romántica' },
+        { cat: 'cabanas', img: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&q=80&auto=format&fit=crop', titulo: 'Cabaña El Cedro' },
+        { cat: 'entorno', img: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&q=80&auto=format&fit=crop', titulo: 'Lago cristalino' },
+        { cat: 'experiencias', img: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80&auto=format&fit=crop', titulo: 'Senderismo' },
+        { cat: 'gastronomia', img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800&q=80&auto=format&fit=crop', titulo: 'Desayuno campestre' },
+        { cat: 'cabanas', img: 'https://images.unsplash.com/photo-1480796927426-f609979314bd?w=800&q=80&auto=format&fit=crop', titulo: 'Cabaña El Álamo' },
+        { cat: 'experiencias', img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80&auto=format&fit=crop', titulo: 'Vista panorámica' },
+        { cat: 'entorno', img: 'https://images.unsplash.com/photo-1487730116645-74489c95b41b?w=800&q=80&auto=format&fit=crop', titulo: 'Río de montaña' },
+        { cat: 'gastronomia', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop', titulo: 'Vino y queso' }
+      ];
+
+      const grid = document.getElementById('galeriaGrid');
+      function render(filter) {
+        const items = filter === 'all' ? galeria : galeria.filter(g => g.cat === filter);
+        grid.innerHTML = items.map(g => `
+          <div class="masonry-item relative rounded-xl overflow-hidden group cursor-pointer hover-zoom shadow-sm img-fallback" style="background-color:#ede0ce; min-height:200px;">
+            <img src="${g.img}" alt="${g.titulo}" class="w-full object-cover relative z-10" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-4 z-20">
+              <div>
+                <p class="text-white font-bold">${g.titulo}</p>
+                <p class="text-white/70 text-xs uppercase tracking-wider">${g.cat}</p>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      render('all');
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('bg-primary', 'text-white');
+            b.classList.add('bg-white', 'border', 'border-border', 'text-gray-700');
+          });
+          btn.classList.add('bg-primary', 'text-white');
+          btn.classList.remove('bg-white', 'border', 'border-border', 'text-gray-700');
+          render(btn.dataset.filter);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

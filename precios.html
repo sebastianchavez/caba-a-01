@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Precios · Cabañas del Bosque</title>
+  <meta name="description" content="Conoce nuestras tarifas por noche, paquetes con precios especiales y políticas de cancelación." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34', 'primary-light': '#c08552', 'primary-dark': '#6b4423',
+            secondary: '#3d5f3d', 'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1', 'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce', 'background-dark': '#2c1f15', 'background-card': '#ffffff',
+            muted: '#6b5d4f', border: '#e0d2bd'
+          },
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="precios" class="bg-background-light text-gray-800 font-sans">
+
+  <div id="appHeader"></div>
+
+  <main>
+    <!-- HERO -->
+    <section class="relative h-[50vh] flex items-center gradient-overlay hero-fallback" style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=85&auto=format&fit=crop'); background-size: cover; background-position: center; background-color: #2c1f15;">
+      <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl">
+          <p class="text-accent uppercase tracking-[0.3em] text-sm mb-4 font-bold">Precios y tarifas</p>
+          <h1 class="text-5xl md:text-7xl font-black text-white leading-[1.05] mb-6 font-display">
+            Tarifas <span class="italic text-accent">transparentes</span>
+          </h1>
+          <p class="text-lg md:text-xl text-gray-100 max-w-2xl leading-relaxed">
+            Sin sorpresas. Conoce todos nuestros precios y elige la opción que mejor se adapte a ti.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TABLA COMPARATIVA DE CABAÑAS -->
+    <section class="py-16 lg:py-20 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 font-display">Tarifas por cabaña</h2>
+        <p class="text-gray-600">Precios por noche. Varía según temporada y duración de la estadía.</p>
+      </div>
+
+      <div id="cabanasGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <!-- Inyectado por JS -->
+      </div>
+
+      <!-- Tabla de comparación -->
+      <div class="overflow-x-auto bg-white rounded-2xl shadow-md border border-border">
+        <table class="w-full text-sm">
+          <thead class="bg-background-cream">
+            <tr>
+              <th class="text-left p-4 font-bold">Cabaña</th>
+              <th class="text-center p-4 font-bold">Capacidad</th>
+              <th class="text-center p-4 font-bold">Habitaciones</th>
+              <th class="text-right p-4 font-bold">Temporada baja</th>
+              <th class="text-right p-4 font-bold">Temporada alta</th>
+              <th class="text-center p-4 font-bold"></th>
+            </tr>
+          </thead>
+          <tbody id="tablaComparativa">
+            <!-- Inyectado por JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TEMPORADAS -->
+    <section class="py-16 bg-background-cream">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-bold">Temporadas</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 font-display">Tarifas según temporada</h2>
+            <p class="text-gray-600 mb-6">Nuestras tarifas varían según la temporada. La temporada alta incluye los meses de verano (junio-agosto), navidad y año nuevo.</p>
+            <div class="space-y-4">
+              <div class="bg-white rounded-xl p-5 border border-border">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="font-bold text-lg">🌸 Temporada baja</h3>
+                  <span class="text-sm text-muted">Mar - May, Sep - Nov</span>
+                </div>
+                <p class="text-sm text-muted mb-3">Tarifas estándar. Ideal para disfrutar de la tranquilidad del bosque.</p>
+                <p class="text-primary font-bold">Hasta 20% más económico</p>
+              </div>
+              <div class="bg-white rounded-xl p-5 border border-primary border-2">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="font-bold text-lg">☀️ Temporada alta</h3>
+                  <span class="text-sm text-muted">Jun - Ago, Dic - Feb</span>
+                </div>
+                <p class="text-sm text-muted mb-3">Temporada con mayor demanda. Reserva con anticipación.</p>
+                <p class="text-primary font-bold">Recargo del 20-25%</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-lg p-8 border border-border">
+            <h3 class="font-display text-2xl font-bold mb-4">Beneficios incluidos</h3>
+            <p class="text-sm text-muted mb-5">Todas nuestras tarifas incluyen:</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3"><svg class="w-5 h-5 text-secondary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>WiFi de alta velocidad en toda la cabaña</span></li>
+              <li class="flex items-start gap-3"><svg class="w-5 h-5 text-secondary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>Estacionamiento gratuito</span></li>
+              <li class="flex items-start gap-3"><svg class="w-5 h-5 text-secondary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>Ropa de cama y toallas premium</span></li>
+              <li class="flex items-start gap-3"><svg class="w-5 h-5 text-secondary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>Cocina totalmente equipada</span></li>
+              <li class="flex items-start gap-3"><svg class="w-5 h-5 text-secondary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>Leña para chimenea ilimitada</span></li>
+              <li class="flex items-start gap-3"><svg class="w-5 h-5 text-secondary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>Atención 24/7 del equipo de recepción</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESCUENTOS -->
+    <section class="py-16 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 font-display">Descuentos por estadía</h2>
+        <p class="text-gray-600">Mientras más noches reserves, más ahorras.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-7 text-center border border-border card-hover">
+          <div class="text-4xl font-bold text-primary font-display mb-2">5%</div>
+          <p class="text-sm font-semibold text-gray-900">3-4 noches</p>
+          <p class="text-xs text-muted mt-1">Descuento automático</p>
+        </div>
+        <div class="bg-white rounded-2xl p-7 text-center border-2 border-primary card-hover shadow-lg scale-105">
+          <div class="text-4xl font-bold text-primary font-display mb-2">10%</div>
+          <p class="text-sm font-semibold text-gray-900">5-6 noches</p>
+          <p class="text-xs text-muted mt-1">Más popular</p>
+        </div>
+        <div class="bg-white rounded-2xl p-7 text-center border border-border card-hover">
+          <div class="text-4xl font-bold text-primary font-display mb-2">15%</div>
+          <p class="text-sm font-semibold text-gray-900">7+ noches</p>
+          <p class="text-xs text-muted mt-1">Mejor precio</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICAS -->
+    <section class="py-16 bg-background-cream">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 font-display">Políticas importantes</h2>
+        </div>
+
+        <div class="space-y-4">
+          <details class="bg-white rounded-xl border border-border p-5 group" open>
+            <summary class="font-bold cursor-pointer flex items-center justify-between">
+              Política de cancelación
+              <svg class="w-5 h-5 group-open:rotate-180 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="mt-3 text-sm text-gray-600 space-y-2">
+              <p>• Cancelación con <strong>más de 14 días</strong> de anticipación: reembolso del 100%.</p>
+              <p>• Cancelación entre <strong>7 y 14 días</strong> antes: reembolso del 50%.</p>
+              <p>• Cancelación con <strong>menos de 7 días</strong> o no-show: sin reembolso.</p>
+              <p>• Cambios de fecha sin costo hasta 7 días antes (sujeto a disponibilidad).</p>
+            </div>
+          </details>
+
+          <details class="bg-white rounded-xl border border-border p-5 group">
+            <summary class="font-bold cursor-pointer flex items-center justify-between">
+              Check-in y check-out
+              <svg class="w-5 h-5 group-open:rotate-180 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="mt-3 text-sm text-gray-600 space-y-2">
+              <p>• Check-in: a partir de las <strong>15:00 hrs</strong>.</p>
+              <p>• Check-out: hasta las <strong>12:00 hrs</strong>.</p>
+              <p>• Late check-out disponible bajo solicitud y cargo adicional.</p>
+              <p>• Early check-in sujeto a disponibilidad.</p>
+            </div>
+          </details>
+
+          <details class="bg-white rounded-xl border border-border p-5 group">
+            <summary class="font-bold cursor-pointer flex items-center justify-between">
+              Métodos de pago
+              <svg class="w-5 h-5 group-open:rotate-180 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="mt-3 text-sm text-gray-600 space-y-2">
+              <p>• Tarjetas de crédito/débito (Visa, Mastercard, American Express).</p>
+              <p>• Transferencia bancaria (con 24h de anticipación).</p>
+              <p>• Pago en efectivo en recepción.</p>
+              <p>• Para reservas confirmadas se requiere un anticipo del 50%.</p>
+            </div>
+          </details>
+
+          <details class="bg-white rounded-xl border border-border p-5 group">
+            <summary class="font-bold cursor-pointer flex items-center justify-between">
+              Normas de la casa
+              <svg class="w-5 h-5 group-open:rotate-180 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="mt-3 text-sm text-gray-600 space-y-2">
+              <p>• No fumar dentro de las cabañas.</p>
+              <p>• No se permiten mascotas (excepto en Cabaña El Álamo con aviso previo).</p>
+              <p>• Capacidad máxima respetada estrictamente.</p>
+              <p>• Música y ruido moderado después de las 22:00 hrs.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-secondary text-white text-center">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold font-display mb-4">¿Encontraste la cabaña perfecta?</h2>
+        <p class="text-white/70 max-w-2xl mx-auto mb-8">Reserva ahora y asegura tu lugar en el bosque.</p>
+        <a href="reserva.html" class="btn-primary bg-accent text-background-dark hover:bg-white text-base px-8 py-3.5">Reservar ahora</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const grid = document.getElementById('cabanasGrid');
+      grid.innerHTML = CABAÑAS.map(c => `
+        <article class="bg-white rounded-2xl overflow-hidden shadow-md card-hover flex flex-col">
+          <div class="relative overflow-hidden aspect-[4/3] img-fallback" style="background-color:#ede0ce;">
+            <img src="${c.imagenes[0]}" alt="${c.nombre}" class="card-image w-full h-full object-cover relative z-10" loading="lazy"/>
+          </div>
+          <div class="p-5 flex-1 flex flex-col">
+            <h3 class="font-display text-xl font-bold text-gray-900 mb-1">${c.nombre}</h3>
+            <p class="text-sm text-muted mb-3">${c.eslogan}</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="amenity-pill text-xs">${c.capacidad} pers</span>
+              <span class="amenity-pill text-xs">${c.habitaciones} hab</span>
+              <span class="amenity-pill text-xs">${c.baños} baño${c.baños > 1 ? 's' : ''}</span>
+            </div>
+            <div class="flex items-baseline gap-2 mt-auto">
+              <span class="font-display text-2xl font-bold text-primary">${UI.formatMoneda(c.precioNoche)}</span>
+              <span class="text-xs text-muted">/noche</span>
+            </div>
+          </div>
+        </article>
+      `).join('');
+
+      const tabla = document.getElementById('tablaComparativa');
+      tabla.innerHTML = CABAÑAS.map(c => `
+        <tr class="border-t border-border hover:bg-background-cream/50">
+          <td class="p-4 font-semibold">${c.nombre}</td>
+          <td class="p-4 text-center">${c.capacidad} pers</td>
+          <td class="p-4 text-center">${c.habitaciones}</td>
+          <td class="p-4 text-right font-semibold">${UI.formatMoneda(c.precioNoche)}</td>
+          <td class="p-4 text-right text-primary font-semibold">${UI.formatMoneda(c.precioTemporadaAlta)}</td>
+          <td class="p-4 text-center"><a href="reserva.html?cabana=${c.id}" class="btn-primary text-xs px-3 py-1.5">Reservar</a></td>
+        </tr>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

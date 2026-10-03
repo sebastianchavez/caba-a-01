@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle de reserva · Cabañas del Bosque</title>
+  <meta name="description" content="Consulta el detalle y estado de tu reserva." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34', 'primary-light': '#c08552', 'primary-dark': '#6b4423',
+            secondary: '#3d5f3d', 'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1', 'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce', 'background-dark': '#2c1f15', 'background-card': '#ffffff',
+            muted: '#6b5d4f', border: '#e0d2bd'
+          },
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="detalle-reserva" class="bg-background-light text-gray-800 font-sans">
+
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 max-w-5xl">
+
+    <div class="mb-6">
+      <a href="perfil.html" class="btn-ghost text-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Volver a mis reservas
+      </a>
+    </div>
+
+    <div id="detalleContainer">
+      <!-- Inyectado por JS -->
+    </div>
+
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      const u = Auth.current();
+      const reserva = id ? Reservas.getById(id) : null;
+
+      if (!reserva || !u || reserva.userId !== u.id) {
+        document.getElementById('detalleContainer').innerHTML = `
+          <div class="text-center py-20">
+            <p class="text-muted mb-4">No se encontró la reserva.</p>
+            <a href="perfil.html" class="btn-primary">Ir a mis reservas</a>
+          </div>
+        `;
+        return;
+      }
+
+      const cabana = Cabanas.getById(reserva.cabanaId);
+      const serviciosIncluidos = (reserva.servicios || []).map(id => SERVICIOS.find(s => s.id === id)).filter(Boolean);
+      const badgeClass = {
+        pendiente: 'badge-pendiente',
+        confirmada: 'badge-confirmada',
+        pagada: 'badge-pagada',
+        cancelada: 'badge-cancelada',
+        completada: 'badge-completada'
+      }[reserva.estado] || 'badge-confirmada';
+
+      const noches = UI.diffDias(reserva.fechaEntrada, reserva.fechaSalida);
+      const subtotalCabana = reserva.total - serviciosIncluidos.reduce((a, s) => a + s.precio, 0);
+
+      const puedeAnular = !['cancelada', 'completada'].includes(reserva.estado);
+      const puedePagar = ['confirmada', 'pendiente'].includes(reserva.estado);
+
+      document.getElementById('detalleContainer').innerHTML = `
+        <div class="bg-white rounded-2xl shadow-md border border-border overflow-hidden mb-6">
+          <div class="bg-gradient-to-r from-primary to-primary-dark text-white p-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="text-center sm:text-left">
+              <p class="text-xs uppercase tracking-wider opacity-80">Reserva</p>
+              <p class="font-display text-2xl font-bold">${reserva.codigo}</p>
+            </div>
+            <span class="badge ${badgeClass}">${reserva.estado}</span>
+          </div>
+
+          <div class="p-6 lg:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div class="img-fallback rounded-xl overflow-hidden" style="background-color:#ede0ce;">
+                <img src="${cabana.imagenes[0]}" alt="${cabana.nombre}" class="w-full rounded-xl aspect-[4/3] object-cover relative z-10" loading="lazy"/>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Cabaña</p>
+                <h2 class="font-display text-2xl font-bold mb-2">${cabana.nombre}</h2>
+                <p class="text-muted mb-3">${cabana.eslogan}</p>
+                <div class="flex flex-wrap gap-1.5">
+                  ${cabana.amenidades.slice(0, 5).map(a => `<span class="amenity-pill text-xs">${a}</span>`).join('')}
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pb-6 border-b border-border">
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Entrada</p>
+                <p class="font-bold text-base mt-1">${UI.formatFecha(reserva.fechaEntrada)}</p>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Salida</p>
+                <p class="font-bold text-base mt-1">${UI.formatFecha(reserva.fechaSalida)}</p>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Noches</p>
+                <p class="font-bold text-base mt-1">${noches}</p>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Huéspedes</p>
+                <p class="font-bold text-base mt-1">${reserva.huespedes} <span class="text-muted font-normal text-xs">(${reserva.adultos} ad, ${reserva.niños} ni)</span></p>
+              </div>
+            </div>
+
+            <div class="py-6 border-b border-border">
+              <h3 class="font-bold mb-3 text-sm uppercase tracking-wider text-muted">Costos</h3>
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between"><span>Alojamiento (${noches} noches)</span><span class="font-semibold">${UI.formatMoneda(subtotalCabana)}</span></div>
+                ${serviciosIncluidos.length > 0 ? `
+                  <div class="border-t border-border pt-2 mt-2">
+                    ${serviciosIncluidos.map(s => `
+                      <div class="flex justify-between text-xs">
+                        <span class="text-muted">${s.nombre}</span>
+                        <span>${UI.formatMoneda(s.precio)}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                ` : ''}
+                <div class="border-t border-border pt-2 flex justify-between items-baseline">
+                  <span class="font-bold">Total</span>
+                  <span class="font-display text-2xl font-bold text-primary">${UI.formatMoneda(reserva.total)}</span>
+                </div>
+              </div>
+            </div>
+
+            ${serviciosIncluidos.length > 0 ? `
+              <div class="py-6 border-b border-border">
+                <h3 class="font-bold mb-3 text-sm uppercase tracking-wider text-muted">Servicios contratados</h3>
+                <div class="flex flex-wrap gap-2">
+                  ${serviciosIncluidos.map(s => `<span class="amenity-pill">${s.nombre}</span>`).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            ${reserva.pago ? `
+              <div class="py-6 border-b border-border">
+                <h3 class="font-bold mb-3 text-sm uppercase tracking-wider text-muted">Información de pago</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                  <div><span class="text-muted">Transacción:</span> <span class="font-semibold">${reserva.pago.transaccionId}</span></div>
+                  <div><span class="text-muted">Titular:</span> <span class="font-semibold">${reserva.pago.titular}</span></div>
+                  <div><span class="text-muted">Tarjeta:</span> <span class="font-semibold">${reserva.pago.tarjeta}</span></div>
+                  <div><span class="text-muted">Fecha pago:</span> <span class="font-semibold">${UI.formatFecha(new Date(reserva.pago.fechaPago).toISOString().split('T')[0])}</span></div>
+                </div>
+              </div>
+            ` : ''}
+
+            ${reserva.estado === 'cancelada' ? `
+              <div class="bg-red-50 border border-red-200 rounded-xl p-4 mt-6">
+                <p class="font-bold text-red-700 mb-1">Reserva cancelada</p>
+                <p class="text-sm text-red-600">${reserva.motivo || 'Cancelada por el usuario'}</p>
+                ${reserva.canceladaEn ? `<p class="text-xs text-red-500 mt-1">Cancelada el ${UI.formatFecha(new Date(reserva.canceladaEn).toISOString().split('T')[0])}</p>` : ''}
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="bg-background-cream p-6 flex flex-col sm:flex-row gap-3 justify-end">
+            <a href="perfil.html" class="btn-ghost text-sm">Volver a mis reservas</a>
+            ${puedePagar ? `<a href="pago.html?id=${reserva.id}" class="btn-outline text-sm">Realizar pago</a>` : ''}
+            ${puedeAnular ? `<button id="btnAnular" class="btn-primary text-sm bg-red-600 hover:bg-red-700">Anular reserva</button>` : ''}
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="bg-white rounded-2xl shadow-md border border-border p-6 lg:p-8">
+          <h3 class="font-display text-xl font-bold mb-5">Estado de tu reserva</h3>
+          <div class="timeline">
+            <div class="timeline-item ${['confirmada','pagada','completada','cancelada'].includes(reserva.estado) ? 'completed' : ''}">
+              <p class="font-bold">Reserva creada</p>
+              <p class="text-xs text-muted">${UI.formatFecha(new Date(reserva.creado).toISOString().split('T')[0])}</p>
+            </div>
+            <div class="timeline-item ${reserva.estado === 'confirmada' ? 'active' : (['pagada','completada'].includes(reserva.estado) ? 'completed' : (reserva.estado === 'cancelada' ? 'cancelled' : ''))}">
+              <p class="font-bold">Confirmada</p>
+              <p class="text-xs text-muted">Pendiente de pago</p>
+            </div>
+            <div class="timeline-item ${reserva.estado === 'pagada' ? 'completed' : (reserva.estado === 'completada' ? 'completed' : '')}">
+              <p class="font-bold">${reserva.pago ? 'Pago recibido' : 'Esperando pago'}</p>
+              ${reserva.pago ? `<p class="text-xs text-muted">${UI.formatFecha(new Date(reserva.pago.fechaPago).toISOString().split('T')[0])}</p>` : ''}
+            </div>
+            ${reserva.estado === 'cancelada' ? `
+              <div class="timeline-item cancelled">
+                <p class="font-bold">Cancelada</p>
+                <p class="text-xs text-muted">${reserva.canceladaEn ? UI.formatFecha(new Date(reserva.canceladaEn).toISOString().split('T')[0]) : ''}</p>
+              </div>
+            ` : `
+              <div class="timeline-item ${reserva.estado === 'completada' ? 'completed' : ''}">
+                <p class="font-bold ${reserva.estado === 'completada' ? '' : 'text-muted'}">Check-in ${UI.formatFecha(reserva.fechaEntrada)}</p>
+                <p class="text-xs text-muted">Disfruta tu estadía</p>
+              </div>
+            `}
+          </div>
+        </div>
+      `;
+
+      const btn = document.getElementById('btnAnular');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          UI.modal({
+            titulo: '¿Anular esta reserva?',
+            mensaje: 'Esta acción no se puede deshacer. Se procesará el reembolso según nuestras políticas.',
+            body: `<textarea id="motivoCancel" class="input-field mt-2" rows="3" placeholder="Motivo de cancelación (opcional)"></textarea>`,
+            confirmLabel: 'Sí, anular reserva',
+            confirmClass: 'btn-primary bg-red-600 hover:bg-red-700',
+            icon: '<svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>',
+            iconBg: 'bg-red-100',
+            onConfirm: () => {
+              const motivo = document.getElementById('motivoCancel')?.value || '';
+              const res = Reservas.cancelar(reserva.id, motivo);
+              if (res.ok) {
+                UI.toast('Reserva anulada correctamente', 'success');
+                setTimeout(() => location.reload(), 800);
+              } else {
+                UI.toast(res.error, 'error');
+              }
+            }
+          });
+        });
+      }
+    }
+  </script>
+</body>
+</html>

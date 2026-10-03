@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago · Cabañas del Bosque</title>
+  <meta name="description" content="Realiza el pago de tu reserva de forma segura." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34', 'primary-light': '#c08552', 'primary-dark': '#6b4423',
+            secondary: '#3d5f3d', 'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1', 'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce', 'background-dark': '#2c1f15', 'background-card': '#ffffff',
+            muted: '#6b5d4f', border: '#e0d2bd'
+          },
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="pago" class="bg-background-light text-gray-800 font-sans">
+
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 max-w-6xl">
+
+    <div class="text-center mb-8">
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-bold">Pago seguro</p>
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 font-display">Confirma tu reserva</h1>
+      <p class="text-muted mt-2 text-sm">⚠️ Este es un pago simulado con fines de demostración.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+      <!-- FORMULARIO DE PAGO -->
+      <div class="lg:col-span-3">
+        <form id="pagoForm" class="bg-white rounded-2xl shadow-md p-6 lg:p-8 border border-border">
+
+          <h2 class="font-display text-xl font-bold mb-5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+            Información de pago
+          </h2>
+
+          <!-- Método -->
+          <div class="flex gap-3 mb-5">
+            <label class="flex-1 cursor-pointer">
+              <input type="radio" name="metodoPago" value="tarjeta" checked class="sr-only peer"/>
+              <div class="p-4 border-2 border-border rounded-xl peer-checked:border-primary peer-checked:bg-background-cream flex items-center gap-3">
+                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                <div>
+                  <p class="font-bold text-sm">Tarjeta</p>
+                  <p class="text-xs text-muted">Crédito o débito</p>
+                </div>
+              </div>
+            </label>
+            <label class="flex-1 cursor-pointer opacity-60">
+              <input type="radio" name="metodoPago" value="yape" disabled class="sr-only peer"/>
+              <div class="p-4 border-2 border-border rounded-xl peer-checked:border-primary flex items-center gap-3">
+                <div class="w-8 h-8 rounded bg-primary-light/20 flex items-center justify-center text-primary font-bold">Y</div>
+                <div>
+                  <p class="font-bold text-sm">Yape / Plin</p>
+                  <p class="text-xs text-muted">Próximamente</p>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <!-- Tarjeta -->
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold mb-1">Nombre del titular</label>
+              <input id="titular" type="text" class="input-field" placeholder="Como aparece en la tarjeta" autocomplete="off"/>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold mb-1">Número de tarjeta</label>
+              <div class="relative">
+                <input id="numero" type="text" class="input-field pr-12" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="off"/>
+                <div id="cardBrand" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-muted"></div>
+              </div>
+              <p class="text-xs text-muted mt-1">Tip: usa <code class="bg-background-cream px-1 rounded">4242 4242 4242 4242</code> para pruebas</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold mb-1">Vencimiento</label>
+                <input id="expiracion" type="text" class="input-field" placeholder="MM/AA" maxlength="5" autocomplete="off"/>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold mb-1">CVV</label>
+                <input id="cvv" type="text" class="input-field" placeholder="123" maxlength="4" autocomplete="off"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-border mt-6 pt-6">
+            <h3 class="font-display text-lg font-bold mb-4">Tipo de pago</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <label class="cursor-pointer">
+                <input type="radio" name="tipoPago" value="completo" checked class="sr-only peer"/>
+                <div class="p-4 border-2 border-border rounded-xl peer-checked:border-primary peer-checked:bg-background-cream">
+                  <p class="font-bold text-sm">Pago completo</p>
+                  <p class="text-xs text-muted mt-1">Paga el 100% de la reserva</p>
+                </div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="tipoPago" value="anticipo" class="sr-only peer"/>
+                <div class="p-4 border-2 border-border rounded-xl peer-checked:border-primary peer-checked:bg-background-cream">
+                  <p class="font-bold text-sm">Anticipo 50%</p>
+                  <p class="text-xs text-muted mt-1">Paga la mitad, el resto al llegar</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" id="btnPagar" class="btn-primary w-full mt-6 py-3.5 text-base">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            Pagar ahora
+          </button>
+
+          <div class="flex items-center justify-center gap-2 mt-4 text-xs text-muted">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            Pago 100% seguro · Encriptación SSL
+          </div>
+        </form>
+      </div>
+
+      <!-- RESUMEN -->
+      <aside class="lg:col-span-2">
+        <div class="sticky top-24 bg-white rounded-2xl shadow-md p-6 border border-border" id="resumenPago">
+          <h3 class="font-display text-xl font-bold mb-5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            Resumen
+          </h3>
+          <div id="resumenDetalle" class="space-y-4">
+            <!-- Inyectado por JS -->
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id') || Storage.get(STORAGE_KEYS.PAGO_DRAFT);
+      const u = Auth.current();
+      const reserva = id ? Reservas.getById(id) : null;
+
+      if (!reserva || !u || reserva.userId !== u.id) {
+        document.querySelector('main').innerHTML = `
+          <div class="text-center py-20">
+            <p class="text-muted mb-4">No se encontró una reserva pendiente.</p>
+            <a href="perfil.html" class="btn-primary">Ir a mis reservas</a>
+          </div>
+        `;
+        return;
+      }
+
+      if (reserva.estado === 'pagada') {
+        window.location.href = 'pago-confirmado.html?id=' + reserva.id;
+        return;
+      }
+
+      const cabana = Cabanas.getById(reserva.cabanaId);
+      const serviciosIncluidos = (reserva.servicios || []).map(id => SERVICIOS.find(s => s.id === id)).filter(Boolean);
+
+      function pintarResumen() {
+        const tipo = document.querySelector('input[name="tipoPago"]:checked')?.value || 'completo';
+        const total = tipo === 'anticipo' ? Math.round(reserva.total / 2) : reserva.total;
+        document.getElementById('resumenDetalle').innerHTML = `
+          <div class="flex gap-3 pb-4 border-b border-border">
+            <div class="img-fallback w-20 h-20 rounded-lg overflow-hidden shrink-0" style="background-color:#ede0ce;">
+              <img src="${cabana.imagenes[0]}" alt="${cabana.nombre}" class="w-full h-full object-cover relative z-10" loading="lazy"/>
+            </div>
+            <div class="flex-1">
+              <p class="font-bold">${cabana.nombre}</p>
+              <p class="text-xs text-muted">${UI.formatFecha(reserva.fechaEntrada)} → ${UI.formatFecha(reserva.fechaSalida)}</p>
+              <p class="text-xs text-muted">${UI.diffDias(reserva.fechaEntrada, reserva.fechaSalida)} noches · ${reserva.huespedes} huéspedes</p>
+            </div>
+          </div>
+          <div class="space-y-2 text-sm pb-4 border-b border-border">
+            <div class="flex justify-between">
+              <span class="text-muted">Cabaña (${UI.diffDias(reserva.fechaEntrada, reserva.fechaSalida)} noches)</span>
+              <span class="font-semibold">${UI.formatMoneda(reserva.total - serviciosIncluidos.reduce((a, s) => a + s.precio, 0))}</span>
+            </div>
+            ${serviciosIncluidos.length > 0 ? `
+              ${serviciosIncluidos.map(s => `
+                <div class="flex justify-between text-xs">
+                  <span class="text-muted">${s.nombre}</span>
+                  <span>${UI.formatMoneda(s.precio)}</span>
+                </div>
+              `).join('')}
+            ` : ''}
+            <div class="flex justify-between text-xs">
+              <span class="text-muted">Reserva ${reserva.codigo}</span>
+              <span></span>
+            </div>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-muted">Subtotal</span>
+            <span class="font-semibold">${UI.formatMoneda(reserva.total)}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-muted">Impuestos incluidos</span>
+            <span class="font-semibold">S/ 0</span>
+          </div>
+          <div class="border-t border-border pt-3 flex justify-between items-baseline">
+            <span class="font-bold">${tipo === 'anticipo' ? 'A pagar (50%)' : 'Total'}</span>
+            <span class="font-display text-3xl font-bold text-primary">${UI.formatMoneda(total)}</span>
+          </div>
+          ${tipo === 'anticipo' ? `
+            <p class="text-xs text-muted mt-2">El saldo restante (${UI.formatMoneda(reserva.total - total)}) se paga al momento del check-in.</p>
+          ` : ''}
+        `;
+      }
+
+      pintarResumen();
+      document.querySelectorAll('input[name="tipoPago"]').forEach(r => r.addEventListener('change', pintarResumen));
+
+      // Formateo de tarjeta
+      const num = document.getElementById('numero');
+      num.addEventListener('input', e => {
+        let v = e.target.value.replace(/\D/g, '').substring(0, 19);
+        v = v.replace(/(.{4})/g, '$1 ').trim();
+        e.target.value = v;
+
+        const brand = document.getElementById('cardBrand');
+        if (/^4/.test(v)) brand.textContent = 'VISA';
+        else if (/^(5[1-5]|2[2-7])/.test(v)) brand.textContent = 'MASTERCARD';
+        else if (/^3[47]/.test(v)) brand.textContent = 'AMEX';
+        else brand.textContent = '';
+      });
+
+      const exp = document.getElementById('expiracion');
+      exp.addEventListener('input', e => {
+        let v = e.target.value.replace(/\D/g, '').substring(0, 4);
+        if (v.length >= 3) v = v.substring(0, 2) + '/' + v.substring(2);
+        e.target.value = v;
+      });
+
+      const cvv = document.getElementById('cvv');
+      cvv.addEventListener('input', e => {
+        e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+      });
+
+      // Submit
+      document.getElementById('pagoForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const u2 = Auth.current();
+        const titular = document.getElementById('titular').value.trim();
+        const numero = document.getElementById('numero').value;
+        const expiracion = document.getElementById('expiracion').value;
+        const cvvv = document.getElementById('cvv').value;
+
+        if (!titular || !numero || !expiracion || !cvvv) {
+          UI.toast('Completa todos los campos', 'error');
+          return;
+        }
+
+        const datos = { nombre: titular, numero, expiracion, cvv: cvvv };
+        const res = Pago.procesar(reserva, datos);
+        if (!res.ok) {
+          UI.toast(res.error, 'error');
+          return;
+        }
+        const r = Reservas.registrarPago(reserva.id, res.pago);
+        if (r.ok) {
+          Storage.remove(STORAGE_KEYS.PAGO_DRAFT);
+          window.location.href = 'pago-confirmado.html?id=' + reserva.id;
+        }
+      });
+
+      // Autocompletar titular con usuario
+      if (u) {
+        document.getElementById('titular').value = u.nombre;
+      }
+    }
+  </script>
+</body>
+</html>

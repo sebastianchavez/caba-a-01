@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserva confirmada · Cabañas del Bosque</title>
+  <meta name="description" content="Tu reserva ha sido confirmada. Realiza el pago para asegurar tu lugar." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34', 'primary-light': '#c08552', 'primary-dark': '#6b4423',
+            secondary: '#3d5f3d', 'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1', 'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce', 'background-dark': '#2c1f15', 'background-card': '#ffffff',
+            muted: '#6b5d4f', border: '#e0d2bd'
+          },
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="confirmacion" class="bg-background-light text-gray-800 font-sans">
+
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-4xl">
+
+    <!-- Confirmación -->
+    <div class="text-center mb-10 fade-in">
+      <div class="checkmark-circle mx-auto mb-6">
+        <div class="background"></div>
+        <div class="checkmark"></div>
+      </div>
+      <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-bold">Reserva creada</p>
+      <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-3 font-display">¡Casi listo!</h1>
+      <p class="text-gray-600 max-w-xl mx-auto">Tu reserva ha sido creada con éxito. Realiza el pago para confirmar tu estadía.</p>
+    </div>
+
+    <!-- Datos de la reserva -->
+    <div id="reservaCard" class="bg-white rounded-2xl shadow-xl border border-border overflow-hidden mb-8">
+      <!-- Inyectado por JS -->
+    </div>
+
+    <!-- Pasos siguientes -->
+    <div class="bg-background-cream rounded-2xl p-6 lg:p-8 mb-8">
+      <h2 class="font-display text-2xl font-bold mb-5">Próximos pasos</h2>
+      <ol class="space-y-4">
+        <li class="flex gap-4">
+          <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center shrink-0">1</div>
+          <div>
+            <p class="font-bold">Realiza el pago</p>
+            <p class="text-sm text-muted">Confirma tu reserva con el pago. Aceptamos Visa, Mastercard y más.</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center shrink-0">2</div>
+          <div>
+            <p class="font-bold">Recibe confirmación por email</p>
+            <p class="text-sm text-muted">Te enviaremos todos los detalles e instrucciones de llegada.</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center shrink-0">3</div>
+          <div>
+            <p class="font-bold">Disfruta tu estadía</p>
+            <p class="text-sm text-muted">Check-in desde las 15:00 hrs. ¡Te esperamos en el bosque!</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a id="btnPagar" href="#" class="btn-primary text-base px-8 py-3.5">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        Ir a pagar
+      </a>
+      <a href="perfil.html" class="btn-outline text-base px-8 py-3.5">Ver mis reservas</a>
+    </div>
+
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      const reserva = id ? Reservas.getById(id) : null;
+      const u = Auth.current();
+
+      if (!reserva || !u || reserva.userId !== u.id) {
+        document.querySelector('main').innerHTML = `
+          <div class="text-center py-20">
+            <p class="text-muted mb-4">No se encontró la reserva.</p>
+            <a href="reserva.html" class="btn-primary">Hacer una reserva</a>
+          </div>
+        `;
+        return;
+      }
+
+      Storage.set(STORAGE_KEYS.PAGO_DRAFT, reserva.id);
+
+      const cabana = Cabanas.getById(reserva.cabanaId);
+      const serviciosIncluidos = (reserva.servicios || []).map(id => SERVICIOS.find(s => s.id === id)).filter(Boolean);
+
+      document.getElementById('reservaCard').innerHTML = `
+        <div class="bg-primary text-white p-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="text-center sm:text-left">
+            <p class="text-xs uppercase tracking-wider opacity-80">Código de reserva</p>
+            <p class="font-display text-2xl font-bold">${reserva.codigo}</p>
+          </div>
+          <span class="badge badge-confirmada bg-white/20 text-white">Pendiente de pago</span>
+        </div>
+        <div class="p-6 lg:p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="img-fallback rounded-xl overflow-hidden" style="background-color:#ede0ce;">
+            <img src="${cabana.imagenes[0]}" alt="${cabana.nombre}" class="w-full rounded-xl aspect-[4/3] object-cover relative z-10" loading="lazy"/>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div>
+              <p class="text-xs uppercase tracking-wider text-muted font-semibold">Cabaña</p>
+              <p class="font-display text-xl font-bold">${cabana.nombre}</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Entrada</p>
+                <p class="font-semibold">${UI.formatFecha(reserva.fechaEntrada)}</p>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Salida</p>
+                <p class="font-semibold">${UI.formatFecha(reserva.fechaSalida)}</p>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Noches</p>
+                <p class="font-semibold">${UI.diffDias(reserva.fechaEntrada, reserva.fechaSalida)}</p>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Huéspedes</p>
+                <p class="font-semibold">${reserva.huespedes} (${reserva.adultos} ad, ${reserva.niños} ni)</p>
+              </div>
+            </div>
+            ${serviciosIncluidos.length > 0 ? `
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold mb-2">Servicios incluidos</p>
+                <div class="flex flex-wrap gap-1.5">
+                  ${serviciosIncluidos.map(s => `<span class="amenity-pill text-xs">${s.nombre}</span>`).join('')}
+                </div>
+              </div>
+            ` : ''}
+            <div class="border-t border-border pt-3 flex justify-between items-baseline">
+              <span class="font-bold">Total a pagar</span>
+              <span class="font-display text-3xl font-bold text-primary">${UI.formatMoneda(reserva.total)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('btnPagar').href = 'pago.html?id=' + reserva.id;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago confirmado · Cabañas del Bosque</title>
+  <meta name="description" content="Tu pago se ha realizado con éxito." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5e34', 'primary-light': '#c08552', 'primary-dark': '#6b4423',
+            secondary: '#3d5f3d', 'secondary-light': '#6b8e4e',
+            accent: '#d4a574',
+            'background-light': '#faf6f1', 'background-cream': '#f3ead9',
+            'background-soft': '#ede0ce', 'background-dark': '#2c1f15', 'background-card': '#ffffff',
+            muted: '#6b5d4f', border: '#e0d2bd'
+          },
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="pago-confirmado" class="bg-background-light text-gray-800 font-sans">
+
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-4xl">
+
+    <div class="text-center mb-10 fade-in">
+      <div class="checkmark-circle mx-auto mb-6">
+        <div class="background"></div>
+        <div class="checkmark"></div>
+      </div>
+      <p class="text-secondary uppercase tracking-[0.3em] text-xs mb-3 font-bold">Pago exitoso</p>
+      <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-3 font-display">¡Tu reserva está confirmada!</h1>
+      <p class="text-gray-600 max-w-xl mx-auto">Hemos recibido tu pago. Te enviamos un email con todos los detalles.</p>
+    </div>
+
+    <!-- Recibo -->
+    <div id="reciboCard" class="bg-white rounded-2xl shadow-xl border border-border overflow-hidden mb-8">
+      <!-- Inyectado por JS -->
+    </div>
+
+    <!-- Info importante -->
+    <div class="bg-accent/20 border border-accent rounded-2xl p-6 mb-8 flex gap-4">
+      <svg class="w-8 h-8 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <div>
+        <p class="font-bold mb-1">Información importante</p>
+        <ul class="text-sm space-y-1 text-gray-700">
+          <li>• Check-in desde las <strong>15:00 hrs</strong> del día de entrada.</li>
+          <li>• Check-out hasta las <strong>12:00 hrs</strong> del día de salida.</li>
+          <li>• Recibirás las instrucciones de llegada 48 horas antes.</li>
+          <li>• Conserva tu código de reserva: <strong id="codigoInfo"></strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a id="btnDetalle" href="#" class="btn-primary text-base px-8 py-3.5">
+        Ver detalle de la reserva
+      </a>
+      <a href="index.html" class="btn-outline text-base px-8 py-3.5">Volver al inicio</a>
+    </div>
+
+  </main>
+
+  <div id="appFooter"></div>
+
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      const u = Auth.current();
+      const reserva = id ? Reservas.getById(id) : null;
+
+      if (!reserva || !u || reserva.userId !== u.id) {
+        document.querySelector('main').innerHTML = `
+          <div class="text-center py-20">
+            <p class="text-muted mb-4">No se encontró la reserva.</p>
+            <a href="index.html" class="btn-primary">Ir al inicio</a>
+          </div>
+        `;
+        return;
+      }
+
+      document.getElementById('codigoInfo').textContent = reserva.codigo;
+      document.getElementById('btnDetalle').href = 'detalle-reserva.html?id=' + reserva.id;
+
+      const cabana = Cabanas.getById(reserva.cabanaId);
+      const pago = reserva.pago || {};
+      const serviciosIncluidos = (reserva.servicios || []).map(id => SERVICIOS.find(s => s.id === id)).filter(Boolean);
+
+      document.getElementById('reciboCard').innerHTML = `
+        <div class="bg-secondary text-white p-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="text-center sm:text-left">
+            <p class="text-xs uppercase tracking-wider opacity-80">Recibo de pago</p>
+            <p class="font-display text-xl font-bold">${pago.transaccionId || 'TXN-PENDIENTE'}</p>
+          </div>
+          <span class="badge badge-pagada bg-white/20 text-white">Pagado</span>
+        </div>
+        <div class="p-6 lg:p-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-border">
+            <div>
+              <p class="text-xs uppercase tracking-wider text-muted font-semibold mb-1">Reserva</p>
+              <p class="font-display text-lg font-bold mb-3">${reserva.codigo}</p>
+              <div class="img-fallback rounded-xl overflow-hidden" style="background-color:#ede0ce;">
+                <img src="${cabana.imagenes[0]}" alt="${cabana.nombre}" class="w-full rounded-xl aspect-[16/10] object-cover relative z-10 mb-3" loading="lazy"/>
+              </div>
+              <p class="font-bold mt-3">${cabana.nombre}</p>
+              <p class="text-xs text-muted">Cabaña ${cabana.habitaciones} hab · cap ${cabana.capacidad}</p>
+            </div>
+            <div class="space-y-3 text-sm">
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <p class="text-xs uppercase tracking-wider text-muted font-semibold">Entrada</p>
+                  <p class="font-bold">${UI.formatFecha(reserva.fechaEntrada)}</p>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-wider text-muted font-semibold">Salida</p>
+                  <p class="font-bold">${UI.formatFecha(reserva.fechaSalida)}</p>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-wider text-muted font-semibold">Noches</p>
+                  <p class="font-bold">${UI.diffDias(reserva.fechaEntrada, reserva.fechaSalida)}</p>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-wider text-muted font-semibold">Huéspedes</p>
+                  <p class="font-bold">${reserva.huespedes}</p>
+                </div>
+              </div>
+              ${serviciosIncluidos.length > 0 ? `
+                <div>
+                  <p class="text-xs uppercase tracking-wider text-muted font-semibold mb-1">Servicios</p>
+                  <div class="flex flex-wrap gap-1.5">
+                    ${serviciosIncluidos.map(s => `<span class="amenity-pill text-xs">${s.nombre}</span>`).join('')}
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+            <div class="space-y-2 text-sm">
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Titular</p>
+                <p class="font-bold">${pago.titular || u.nombre}</p>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Tarjeta</p>
+                <p class="font-bold">${pago.tarjeta || '**** **** **** ****'}</p>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-muted font-semibold">Fecha de pago</p>
+                <p class="font-bold">${pago.fechaPago ? UI.formatFecha(new Date(pago.fechaPago).toISOString().split('T')[0]) : UI.formatFecha(new Date().toISOString().split('T')[0])}</p>
+              </div>
+            </div>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between"><span class="text-muted">Subtotal</span><span class="font-semibold">${UI.formatMoneda(reserva.total)}</span></div>
+              <div class="flex justify-between"><span class="text-muted">Impuestos</span><span class="font-semibold">S/ 0</span></div>
+              <div class="border-t border-border pt-2 flex justify-between items-baseline">
+                <span class="font-bold">Total pagado</span>
+                <span class="font-display text-3xl font-bold text-primary">${UI.formatMoneda(reserva.total)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
