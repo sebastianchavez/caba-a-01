@@ -13,13 +13,13 @@ document.addEventListener('error', function (e) {
 }, true);
 
 const STORAGE_KEYS = {
-  USERS: 'cdb_users',
-  SESSION: 'cdb_session',
-  RESERVAS: 'cdb_reservas',
-  RESERVA_DRAFT: 'cdb_reserva_draft',
-  PAGO_DRAFT: 'cdb_pago_draft',
-  CONTACT_MSGS: 'cdb_contact_messages',
-  RECOVERY: 'cdb_recovery_codes'
+  USERS: 'cdb_users_clp_v1',
+  SESSION: 'cdb_session_clp_v1',
+  RESERVAS: 'cdb_reservas_clp_v1',
+  RESERVA_DRAFT: 'cdb_reserva_draft_clp_v1',
+  PAGO_DRAFT: 'cdb_pago_draft_clp_v1',
+  CONTACT_MSGS: 'cdb_contact_messages_clp_v1',
+  RECOVERY: 'cdb_recovery_codes_clp_v1'
 };
 
 /* ============================================================
@@ -37,8 +37,8 @@ const CABAÑAS = [
     capacidad: 4,
     habitaciones: 2,
     baños: 1,
-    precioNoche: 180,
-    precioTemporadaAlta: 220,
+    precioNoche: 45000,
+    precioTemporadaAlta: 55000,
     imagenes: [
       unsplash('1449158743715-0a90ebb6d2d8', 1200),
       unsplash('1542718610-a1d656d1884c', 800),
@@ -54,8 +54,8 @@ const CABAÑAS = [
     capacidad: 6,
     habitaciones: 3,
     baños: 2,
-    precioNoche: 280,
-    precioTemporadaAlta: 340,
+    precioNoche: 70000,
+    precioTemporadaAlta: 85000,
     imagenes: [
       unsplash('1502784444187-359ac186c5fa', 1200),
       unsplash('1480796927426-f609979314bd', 800),
@@ -71,8 +71,8 @@ const CABAÑAS = [
     capacidad: 2,
     habitaciones: 1,
     baños: 1,
-    precioNoche: 150,
-    precioTemporadaAlta: 185,
+    precioNoche: 37500,
+    precioTemporadaAlta: 46250,
     imagenes: [
       unsplash('1518780664697-55e3ad937233', 1200),
       unsplash('1542718610-a1d656d1884c', 800),
@@ -88,8 +88,8 @@ const CABAÑAS = [
     capacidad: 8,
     habitaciones: 4,
     baños: 3,
-    precioNoche: 360,
-    precioTemporadaAlta: 440,
+    precioNoche: 90000,
+    precioTemporadaAlta: 110000,
     imagenes: [
       unsplash('1480796927426-f609979314bd', 1200),
       unsplash('1502784444187-359ac186c5fa', 800),
@@ -105,42 +105,42 @@ const SERVICIOS = [
     id: 's1',
     nombre: 'Desayuno campestre',
     descripcion: 'Desayuno con productos locales entregado en tu cabaña: panes artesanales, mermeladas caseras, frutas frescas, café de altura y huevos de campo.',
-    precio: 25,
+    precio: 6250,
     icono: 'utensils'
   },
   {
     id: 's2',
     nombre: 'Cena romántica',
     descripcion: 'Cena privada para dos con velas, vino de la región y un menú de tres tiempos preparado por nuestro chef.',
-    precio: 65,
+    precio: 16250,
     icono: 'wine'
   },
   {
     id: 's3',
     nombre: 'Tour guiado por el bosque',
     descripcion: 'Recorrido de 3 horas por senderos naturales con guía experto. Aprende sobre la flora y fauna local.',
-    precio: 40,
+    precio: 10000,
     icono: 'tree'
   },
   {
     id: 's4',
     nombre: 'Spa en la cabaña',
     descripcion: 'Sesión de masajes relajantes (60 min) dentro de tu cabaña con aceites esenciales aromáticos.',
-    precio: 90,
+    precio: 22500,
     icono: 'spa'
   },
   {
     id: 's5',
     nombre: 'Kit de fogata y s\'mores',
     descripcion: 'Leña, encendedor, malvaviscos, galletas y chocolate para una noche mágica alrededor del fuego.',
-    precio: 35,
+    precio: 8750,
     icono: 'fire'
   },
   {
     id: 's6',
     nombre: 'Senderismo guiado',
     descripcion: 'Excursión de día completo a miradores naturales con almuerzo tipo picnic incluido.',
-    precio: 55,
+    precio: 13750,
     icono: 'mountain'
   }
 ];
@@ -151,8 +151,8 @@ const PAQUETES = [
     nombre: 'Escapada Romántica',
     descripcion: '2 noches en Cabaña El Cedro con cena romántica y spa incluido',
     incluye: ['cab3', 's2', 's4'],
-    precioTotal: 450,
-    precioRegular: 545,
+    precioTotal: 112500,
+    precioRegular: 136250,
     descuento: 17
   },
   {
@@ -160,8 +160,8 @@ const PAQUETES = [
     nombre: 'Aventura Familiar',
     descripcion: '3 noches en Cabaña El Álamo con tour guiado y kit fogata',
     incluye: ['cab4', 's3', 's5'],
-    precioTotal: 1180,
-    precioRegular: 1295,
+    precioTotal: 295000,
+    precioRegular: 323750,
     descuento: 9
   },
   {
@@ -169,8 +169,8 @@ const PAQUETES = [
     nombre: 'Relax Total',
     descripcion: '2 noches en Cabaña El Roble con spa y desayuno campestre',
     incluye: ['cab2', 's1', 's4'],
-    precioTotal: 720,
-    precioRegular: 855,
+    precioTotal: 180000,
+    precioRegular: 213750,
     descuento: 16
   }
 ];
@@ -189,7 +189,7 @@ const TESTIMONIOS = [
   {
     id: 't1',
     nombre: 'Carolina M.',
-    lugar: 'Lima, Perú',
+    lugar: 'Santiago, Chile',
     avatar: unsplash('1494790108377-be9c29b29330', 200),
     texto: 'Una experiencia absolutamente mágica. La cabaña El Roble superó todas nuestras expectativas. El jacuzzi bajo las estrellas fue el toque perfecto para nuestra luna de miel.',
     rating: 5
@@ -214,11 +214,11 @@ const TESTIMONIOS = [
 
 const INFO_CONTACTO = {
   nombre: 'Cabañas del Bosque',
-  direccion: 'Km 12 Carretera al Valle Sagrado, Cusco 08000, Perú',
-  telefono: '+51 984 555 123',
-  whatsapp: '+51 984 555 123',
+  direccion: 'Km 12 Camino a Caburgua, Pucón, Chile',
+  telefono: '+56 9 8455 5123',
+  whatsapp: '+56 9 8455 5123',
   email: 'reservas@cabanasdelbosque.com',
-  mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.3!2d-71.97!3d-13.52!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDMxJzEyLjAiUyA3McKwNTgnMTIuMCJX!5e0!3m2!1ses!2spe!4v1700000000000'
+  mapsEmbed: 'https://maps.google.com/maps?q=Puc%C3%B3n%2C%20Chile&output=embed'
 };
 
 /* ============================================================
@@ -252,7 +252,7 @@ const Auth = {
           id: 'u1',
           nombre: 'Sebastián Castro',
           email: 'seba@test.com',
-          telefono: '+51 984 555 111',
+          telefono: '+56 9 8455 5111',
           dni: '45678901',
           password: '123456',
           foto: unsplash('1535713875002-d1d0cf377fde', 200),
@@ -262,7 +262,7 @@ const Auth = {
           id: 'u2',
           nombre: 'Camila Vargas',
           email: 'camila@test.com',
-          telefono: '+51 984 555 222',
+          telefono: '+56 9 8455 5222',
           dni: '47890123',
           password: '123456',
           foto: unsplash('1544005313-94ddf0286df2', 200),
@@ -292,7 +292,7 @@ const Auth = {
           adultos: 2,
           niños: i % 3,
           servicios: i % 2 === 0 ? ['s1'] : [],
-          total: 180 * 3 + (i % 2 === 0 ? 25 : 0),
+          total: 45000 * 3 + (i % 2 === 0 ? 6250 : 0),
           estado: ['confirmada','pagada','pendiente','pagada','confirmada'][i],
           pago: i % 2 === 0 ? null : {
             transaccionId: 'TXN-' + Date.now() + '-' + i,
@@ -577,7 +577,7 @@ const Pago = {
 
 const UI = {
   formatMoneda(n) {
-    return 'S/ ' + Number(n || 0).toLocaleString('es-PE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    return 'CLP$ ' + Number(n || 0).toLocaleString('es-CL', { maximumFractionDigits: 0 });
   },
 
   formatFecha(s) {

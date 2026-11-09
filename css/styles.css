@@ -538,3 +538,7 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-border), transparent);
 }
+
+/* Allow contact details and headings to fit small phones. */
+body { overflow-wrap: anywhere; }
+.grid > * { min-width: 0; }
